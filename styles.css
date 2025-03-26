@@ -1,0 +1,27 @@
+h1 {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  font-size: 20px;
+  height: 100px;
+  width: 400px;
+  margin: 20px;
+}
+
+.button-container {
+  display: flex; /* Делаем родительский элемент flex-контейнером */
+  justify-content: space-between; /* Равномерно распределяем кнопки по ширине */
+}
+
+#back_to_main {
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  top: 0px;
+  left: 10px;
+  background: transparent;
+  border: none;
+}
