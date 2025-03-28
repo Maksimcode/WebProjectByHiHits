@@ -24,4 +24,10 @@ button {
   left: 10px;
   background: transparent;
   border: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+#back_to_main:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
