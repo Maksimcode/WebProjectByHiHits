@@ -28,8 +28,8 @@ button {
 }*/
 
 .button-container {
-  display: flex; /* ������ ������������ ������� flex-����������� */
-  justify-content: space-between; /* ���������� ������������ ������ �� ������ */
+  display: flex;
+  justify-content: space-between;
 }
 
 #back_to_main {
