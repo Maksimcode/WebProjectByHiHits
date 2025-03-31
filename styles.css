@@ -12,8 +12,8 @@ button {
 }
 
 .button-container {
-  display: flex; /* Делаем родительский элемент flex-контейнером */
-  justify-content: space-between; /* Равномерно распределяем кнопки по ширине */
+  display: flex;
+  justify-content: space-between;
 }
 
 #back_to_main {
