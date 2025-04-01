@@ -7,13 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="shortcut icon" href="../catIcon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="styleTree.css" type="text/css" />
     <link rel="stylesheet" href="../styles.css" type="text/css" />
 
-    <title>WebCam Algos 2</title>
+    <title>Decision tree</title>
   </head>
   <body>
-    <h1>Дерево решений!</h1>
-
+    <h1>Decision tree!</h1>
+    <div id="container">
+      <div id="input-panel">
+          <h3>Training sample:</h3>
+          <textarea id="training-data" placeholder="Input the table"></textarea>
+          <button id="build-tree">Build a tree</button>
+          
+          <h3>Classification data:</h3>
+          <textarea id="classification-data" placeholder="Input the data for classification"></textarea>
+          <button id="classify">Classify</button>
+          
+          <div id="result" style="margin-top: 20px;"></div>
+      </div>
+      <div id="visualization"></div>
+  </div>
     <button
       type="button"
       onclick="location.href='../index.html'"
@@ -26,5 +40,6 @@
         height="60px"
       />
     </button>
+    <script src="tree.js"></script>
   </body>
 </html>
