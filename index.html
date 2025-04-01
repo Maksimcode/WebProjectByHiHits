@@ -1,24 +1,51 @@
-<!--Р‘Р»Р°РіРѕРґР°СЂСЏ РІСЃС‚СЂРѕРµРЅРЅРѕРјСѓ РїР»Р°РіРёРЅСѓ Emmet, РјС‹ РІРѕСЃСЃРѕР·РґР°Р»Рё
-РїРµСЂРІРёС‡РЅСѓСЋ СЃС‚СЂСѓРєС‚СѓСЂСѓ С„Р°Р№Р»Р° РїСЂРё РїРѕРјРѕС‰Рё СЃРёРјРІРѕР»Р° "!"
-РїРѕРїСЂРѕР±СѓР№С‚Рµ Рё РїРѕР№РјРµС‚Рµ-->
+<!DOCTYPE html>
 
-<!--РЎСЃС‹Р»РєР° РЅР° РІР°Р»РёРґР°С‚РѕСЂ. Р’СЃС‚Р°РІР»СЏРµС‚Рµ С‚СѓРґР° С‡Р°СЃС‚СЊ РєРѕРґР° Рё РѕРЅ СѓРєР°Р·С‹РІР°РµС‚, РіРґРµ РІС‹ РѕС€РёР±Р»РёСЃСЊ РёР»Рё Р±С‹Р»Рё РЅРµ СЃРѕРІСЃРµРј РїСЂР°РІС‹-->
-<!--привет-->
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
 
-<!DOCTYPE html> <!--Р§С‚Рѕ-С‚Рѕ С‚РёРїР° РјР°РЅРёС„РµСЃС‚Р°. РћР±СЉСЏРІР»СЏРµРј, С‡С‚Рѕ РёСЃРїРѕР»СЊР·СѓРµРј html-->
-<html lang="ru"> <!--РњРµРЅСЏРµС‚ СЏР·С‹Рє СЃР°Р№С‚Р°. en - Р°РЅРіР»РёР№СЃРєРёР№-->
-<head>
-    <meta charset="UTF-8"> <!--РљР°РєСѓСЋ РєР°РґРёСЂРѕРІРєСѓ РёСЃРїРѕР»СЊР·СѓРµРј. UTF-8 СЃР°РјР°СЏ СЂР°СЃРїСЂРѕСЃС‚СЂР°РЅРµРЅРЅР°СЏ, СЃРјС‹СЃР»Р° РјРµРЅСЏС‚СЊ РЅРµС‚-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--РђРґР°РїС‚РёСЂСѓРµС‚ СЌРєСЂР°РЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕРґ СЂР°Р·РјРµСЂ РІРµСЂСЃС‚РєРё.
-    РњРѕР¶РЅРѕ Р·Р°РґР°С‚СЊ РєРѕРЅСЃС‚Р°РЅС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, РЅРѕ Р·Р°С‡РµРј...-->
-    <link rel="shortcut icon" href="catIcon.ico" type="image/x-icon"> <!--Р”РѕР±Р°РІР»СЏРµС‚ РёРєРѕРЅРєСѓ РІРѕ РІРєР»Р°РґРєР°С….
-    Р”Р»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РЅРѕРІРѕР№ РёРєРѕРЅРєРё, СЃРѕС…СЂР°РЅРёС‚Рµ С„Р°Р№Р» РІ С„РѕСЂРјР°С‚Рµ .ico, Р·Р°Р±СЂРѕСЃС‚СЊРµ РІ РїР°РїРєСѓ РІ РїСЂРѕРµРєС‚РѕРј Рё РїРµСЂРµРїРёС€РёС‚Рµ РЅР°Р·РІР°РЅРёРµ РІ href-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="catIcon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+
     <title>WebCam</title>
-</head>
-<body>
-    Hello world. New commit.
-    <br>this is another new commit aaaa.
-    <br> Hihik.
-    <br>Зафиксировали.
-</body>
+  </head>
+  <script src="test.js"></script>
+  <body>
+    <h1>Крутая главная страница сайта</h1>
+
+    <div class="button-container">
+      <button
+        type="button"
+        onclick="location.href='AStar_algorithm/AStar.html'"
+      >
+        Алгоритм A*
+      </button>
+      <button
+        type="button"
+        onclick="location.href='Clusterization/clusterization.html'"
+      >
+        Алгоритм кластеризации
+      </button>
+      <button
+        type="button"
+        onclick="location.href='Genetic_Algorithm/Genetic.html'"
+      >
+        Генетический алгоритм
+      </button>
+    </div>
+
+    <div class="button-container">
+      <button type="button" onclick="location.href='Ant_Algorithm/Ant.html'">
+        Муравьиный алгоритм
+      </button>
+      <button type="button" onclick="location.href='Decision_tree/Tree.html'">
+        Дерево решений
+      </button>
+      <button type="button" onclick="location.href='Neural_network/neuro.html'">
+        Нейронная сеть
+      </button>
+    </div>
+  </body>
 </html>
