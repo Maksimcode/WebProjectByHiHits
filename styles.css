@@ -1,4 +1,4 @@
-body{
+body {
   font-family: Verdana, sans-serif;
   background: linear-gradient(to right, orange, pink);
 }
@@ -25,12 +25,11 @@ button {
   } IF WE WANT TO HAVE A STABLE VERSION ON OTHER
    DEVICES, WE NEED THAT.
    Koroche podumaem
-}*/ 
+}*/
 
 .button-container {
-  display: flex; /* ������ ������������ ������� flex-����������� */
-  flex-wrap: wrap;
-  justify-content: space-between; /* ���������� ������������ ������ �� ������ */
+  display: flex;
+  justify-content: space-between;
 }
 
 #back_to_main {

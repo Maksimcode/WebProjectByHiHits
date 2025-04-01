@@ -1,0 +1,63 @@
+button {
+  font-size: 20px;
+  height: 50px;
+  width: 200px;
+  margin: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Astar */
+#gridContainer {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 1px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.size-container {
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  display: contents;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  transition: background-color 0.3s;
+  position: relative;
+}
+
+.cell:hover {
+  background-color: #eee;
+}
+
+.cell:hover {
+  background-color: #eee;
+}
+
+.obstacle {
+  background-color: #444;
+}
+
+.start {
+  background-color: #2ecc71;
+}
+
+.goal {
+  background-color: #e74c3c;
+}
+
+.path {
+  background-color: #3498db;
+}
