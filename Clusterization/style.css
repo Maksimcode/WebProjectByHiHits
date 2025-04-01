@@ -1,0 +1,28 @@
+#gridContainer {
+    display: grid;
+    grid-template-columns: repeat(50, 1fr);
+    gap: 0px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: fit-content;
+  }
+  .row {
+    display: contents;
+  }
+  
+  .cell {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    transition: background-color 0.3s;
+    position: relative;
+  }
+  
+  .cell:hover {
+    background-color: #eee;
+  }
+  
+  .cell:hover {
+    background-color: #eee;
+  }
