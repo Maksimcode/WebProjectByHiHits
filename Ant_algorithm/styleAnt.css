@@ -1,0 +1,18 @@
+.point{
+    position: absolute;
+    top:100px;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    border-radius: 50px;
+    transform: translate(-50%, -50%)
+    
+  }
+
+#controls button{
+    font-size: 20px;
+    height: 50px;
+    width: 300px;
+    margin: 20px;
+    cursor: pointer;
+}

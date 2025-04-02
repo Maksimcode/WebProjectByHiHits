@@ -1,3 +1,8 @@
+body {
+  font-family: Verdana, sans-serif;
+  background: linear-gradient(to right, orange, pink);
+}
+
 h1 {
   font-size: 30px;
   text-align: center;
@@ -11,9 +16,20 @@ button {
   margin: 20px;
 }
 
+/*@media (max-width: 600px) { 
+  h1 {
+    font-size: 1.5em;
+  }
+  p {
+    font-size: 0.875em;
+  } IF WE WANT TO HAVE A STABLE VERSION ON OTHER
+   DEVICES, WE NEED THAT.
+   Koroche podumaem
+}*/
+
 .button-container {
-  display: flex; /* Делаем родительский элемент flex-контейнером */
-  justify-content: space-between; /* Равномерно распределяем кнопки по ширине */
+  display: flex;
+  justify-content: space-between;
 }
 
 #back_to_main {
