@@ -1,6 +1,6 @@
 // Grid variables
-const ROWS = parseInt(document.getElementById("gridSize").value);
-const COLS = parseInt(document.getElementById("gridSize").value);
+const ROWS = 40;
+const COLS = 40;
 let grid = [];
 
 // Start and goal variables
@@ -13,8 +13,8 @@ let isPathGenerated = false;
 
 // Create grid
 function createGrid() {
-  const ROWS = parseInt(document.getElementById("gridSize").value);
-  const COLS = parseInt(document.getElementById("gridSize").value);
+  // const ROWS = parseInt(document.getElementById("gridSize").value);
+  // const COLS = parseInt(document.getElementById("gridSize").value);
   const container = document.getElementById("gridContainer");
   container.innerHTML = "";
 
@@ -144,6 +144,7 @@ function refreshGrid() {
   startCell = null;
   goalCell = null;
   isPathGenerated = false;
+  isGeneratingObstacles = false;
 }
 
 // Generate path using A* algorithm

@@ -29,35 +29,13 @@ function createGrid() {
 }
 
 function handleCellHover(event) {
-    if (!isPathGenerated && isGeneratingObstacles && !event.buttons) {
-      const cell = event.target;
-      cell.classList.toggle("obstacle");
-    }
-  }
-  
+  const cell = event.target;
+  // cell.classList.add("selected");
+}
+
 function handleCellClick(event) {
-    const cell = event.target;
-  
-    if (isGeneratingObstacles) {
-      cell.classList.toggle("obstacle");
-    } else {
-      if (!isPathGenerated) {
-        if (!startCell) {
-          cell.classList.add("start");
-          startCell = cell;
-        } else if (!goalCell) {
-          cell.classList.add("goal");
-          goalCell = cell;
-        } else {
-          startCell.classList.remove("start");
-          goalCell.classList.remove("goal");
-          cell.classList.add("start");
-          startCell = cell;
-          goalCell = null;
-          isPathGenerated = false;
-        }
-      }
-    }
+  const cell = event.target;
+  cell.classList.add("selected");
 }
 
 createGrid();
