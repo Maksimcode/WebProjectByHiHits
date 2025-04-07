@@ -1,28 +1,20 @@
-#gridContainer {
-    display: grid;
-    grid-template-columns: repeat(50, 1fr);
-    gap: 0px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    width: fit-content;
-  }
-  .row {
-    display: contents;
-  }
-  
-  .cell {
-    width: 10px;
-    height: 10px;
-    border: 1px solid #fff;
-    background-color: #fff;
-    transition: background-color 0.3s;
+canvas 
+{   
+    position: absolute;
+    cursor: crosshair; 
+    background-color: white;  
+    border: 5px solid blueviolet;
+    top: 60px;
+    right: 50px;
+}
+
+input
+{
+    text-align: center;
+    font-size: 16px;
+    padding: 15px 30px;
+    border: 2px solid blueviolet;
     position: relative;
-  }
-  
-  .cell:hover {
-    background-color: #eee;
-  }
-  
-  .cell:hover {
-    background-color: #eee;
-  }
+    top: 15px;
+    margin-left: 20px;
+}
