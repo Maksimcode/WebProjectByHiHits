@@ -10,17 +10,17 @@ class Node {
   }
 }
 
-// Функция сортировки значений столбца по частоте появления (от наибольшего к наименьшему)
+// Функция сортировки значений столбца по частоте (от наибольшего к наименьшему)
 function sortBranches(column) {
   const results = getUniqueElements(column);
   const counts = new Array(results.length).fill(0);
-  column.forEach(value => {
+  column.forEach((value) => {
     const index = results.indexOf(value);
     if (index !== -1) counts[index]++;
   });
   const pairs = results.map((val, i) => ({ val, count: counts[i] }));
   pairs.sort((a, b) => b.count - a.count);
-  return pairs.map(p => p.val);
+  return pairs.map((p) => p.val);
 }
 
 // Функция вычисления наиболее вероятного ответа (использует последний столбец как целевой)
@@ -48,54 +48,76 @@ function getAnswer(currentData) {
   return uniqueAnswers[maxIndex];
 }
 
-// Создание листового узла (хотя здесь не используется как отдельная ветка, можно вызывать при необходимости)
+// Создание листового узла (на основе последнего столбца – целевого)
 function createLeafNode(currentData) {
   const answer = getAnswer(currentData);
   const targetColumnName = currentData[0][currentData[0].length - 1];
   return new Node(`${targetColumnName} = ${answer}`, null, answer);
 }
 
-
 function growTree(node, currentData, remainingAttributes) {
   if (!currentData || currentData.length <= 1) return;
   
   const targetColIndex = currentData[0].length - 1;
-  
-  // Если не осталось атрибутов для разбиения, превращаем узел в лист с итоговым ответом
-  if (remainingAttributes.length === 0) {
-    node.nodeName = `${currentData[0][targetColIndex]} = ${getAnswer(currentData)}`;
-    node.attribute = null;
-    node.branches = [];
+
+  // Если остался ровно один признак для разбиения, форсируем его использование
+  if (remainingAttributes.length === 1) {
+    const forcedAttr = remainingAttributes[0];
+    node.attribute = forcedAttr;
+    if (node.nodeName === "root") {
+      node.nodeName = forcedAttr.name;
+    }
+    
+    const col = getColumn(currentData, forcedAttr.index, 1);
+    const uniqueValues = sortBranches(col);
+    
+    uniqueValues.forEach((value) => {
+      // Фильтрация данных согласно значению выбранного признака
+      const filteredData = [currentData[0]];
+      for (let i = 1; i < currentData.length; i++) {
+        if (currentData[i][forcedAttr.index] === value) {
+          filteredData.push(currentData[i]);
+        }
+      }
+      
+      const childNode = new Node(`${forcedAttr.name} = ${value}`, forcedAttr, value);
+      
+      if (filteredData.length <= 1) {
+        childNode.nodeName = `${currentData[0][targetColIndex]} = Unknown`;
+        childNode.attribute = null;
+      } else {
+        // Так как это последний признак для разбиения, прикрепляем лист с итоговым ответом
+        childNode.branches.push(createLeafNode(filteredData));
+      }
+      node.branches.push(childNode);
+    });
     return;
   }
   
-  // Вызываем функцию для расчёта лучших атрибутов (например, на основе критерия Джини)
+  // Если больше одного признака осталось, выбираем лучший по критерию Джини
   let bestAttributes = getTreeNodes(currentData);
   let availableAttributes = bestAttributes.filter(attr =>
     remainingAttributes.some(rAttr => rAttr.index === attr.index)
   );
+  
   if (availableAttributes.length === 0) {
     availableAttributes = [remainingAttributes[0]];
   }
   
   const bestAttr = availableAttributes[0];
   node.attribute = bestAttr;
-  
-  // Для корня задаём имя признака
   if (node.nodeName === "root") {
     node.nodeName = bestAttr.name;
   }
   
-  // Получаем столбец выбранного атрибута и сортируем уникальные значения по частоте
   const attrIndex = bestAttr.index;
   const column = getColumn(currentData, attrIndex, 1);
   const uniqueValues = sortBranches(column);
   
-  // Удаляем текущий атрибут из оставшихся для последующей рекурсии
+  // Обновляем оставшиеся признаки: исключаем использованный
   const newRemainingAttributes = remainingAttributes.filter(attr => attr.index !== bestAttr.index);
   
-  uniqueValues.forEach(value => {
-    // Фильтруем данные: сохраняем заголовок и строки, где значение атрибута равно текущему value
+  uniqueValues.forEach((value) => {
     const filteredData = [currentData[0]];
     for (let i = 1; i < currentData.length; i++) {
       if (currentData[i][attrIndex] === value) {
@@ -103,23 +125,20 @@ function growTree(node, currentData, remainingAttributes) {
       }
     }
     
-    // Создаём узел для данного значения
     const childNode = new Node(`${bestAttr.name} = ${value}`, bestAttr, value);
     
-    // Если по фильтрации в узел попали только заголовок, заполняем ответом "Unknown"
     if (filteredData.length <= 1) {
       childNode.nodeName = `${currentData[0][targetColIndex]} = Unknown`;
       childNode.attribute = null;
-      childNode.branches = [];
     } else {
-      // Рекурсивно строим дерево для отфильтрованного набора, даже если данные однородны
+      // Рекурсивно строим дерево для отфильтрованных данных
       growTree(childNode, filteredData, newRemainingAttributes);
     }
     
     node.branches.push(childNode);
   });
   
-  // Если ни одна ветвь не была создана, делаем текущий узел листом
+  // Если по какой-то причине не создались ветви, превращаем текущий узел в лист
   if (node.branches.length === 0) {
     node.nodeName = `${currentData[0][targetColIndex]} = ${getAnswer(currentData)}`;
     node.attribute = null;
@@ -132,7 +151,7 @@ export function makeTree(inputData) {
     return new Node("No data", null, null);
   }
   
-  // Формируем список атрибутов, исключая последний столбец (целевой признак)
+  // Формируем список атрибутов, исключая последний столбец – целевой признак
   const allAttributes = [];
   for (let i = 0; i < inputData[0].length - 1; i++) {
     allAttributes.push({ name: inputData[0][i], index: i });
