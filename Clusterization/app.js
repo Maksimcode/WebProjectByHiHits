@@ -103,7 +103,7 @@ function drawClusters() {
         }
     }
 
-            // тут рисуем центры кластеров
+    // тут рисуем центры кластеров
     for (let i = 0; i < centers.length; i++) {
         context.fillStyle = collorCenter[i];
         context.beginPath();

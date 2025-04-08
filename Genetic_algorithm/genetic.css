@@ -1,0 +1,9 @@
+canvas 
+{   
+    position: absolute;
+    cursor: crosshair; 
+    background-color: white;  
+    border: 5px solid blueviolet;
+    top: 65px;
+    right: 50px;
+}
