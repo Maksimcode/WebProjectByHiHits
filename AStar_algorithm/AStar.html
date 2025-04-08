@@ -27,20 +27,42 @@
         height="60px"
       />
     </button>
-    <div class = "size-container">
-      <label for "gridSize">Size: </label>
-      <input type="number" id = "gridSize">
+
+    <div class="main-container">
+      <div class="left-container">
+        <div class="range-container">
+          <p>Current size:</p>
+          <input type="range" min="4" max="40" id="gridSize" />
+          <p id="showSize">22</p>
+        </div>
+
+        <div class="range-container">
+          <p>Set animation speed:</p>
+          <input type="range" min="0" max="100" id="timeout" />
+          <p id="showTimeout">50</p>
+        </div>
+
+        <div class="selection-container">
+          <p>Select construction mode:</p>
+          <select id="selectionConstruct">
+            <option id="drawObstacles">Draw obstacles</option>
+            <option id="selectStart">Start point</option>
+            <option id="selectEnd">End point</option>
+          </select>
+        </div>
+
+        <div class="button-container">
+          <button id="generateGrid">Generate Grid</button>
+          <button id="randomizeObstacles">Randomize Obstacles</button>
+          <button id="refreshGrid">Refresh Grid</button>
+          <button id="generatePath">Generate Path</button>
+        </div>
+      </div>
+
+      <div class="right-container">
+        <div id="gridContainer"></div>
+      </div>
     </div>
-
-
-    <div class="button-container">
-      <button id="generateGrid">Generate Grid</button>
-      <button id="randomizeObstacles">Randomize Obstacles</button>
-      <button id="refreshGrid">Refresh Grid</button>
-      <button id="generatePath">Generate Path</button>
-    </div>
-
-    <div id="gridContainer"></div>
   </body>
   <script src="scriptAStar.js"></script>
 </html>

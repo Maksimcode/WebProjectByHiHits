@@ -1,45 +1,93 @@
-button {
+body {
+  display: flex;
+  flex-direction: column; /* Все элементы в колонку */
+  align-items: center; /* Центрирование по горизонтали */
+  padding: 20px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.left-container {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-left: 100px;
+}
+
+.right-container {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.range-container,
+.selection-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+p {
   font-size: 20px;
-  height: 50px;
-  width: 200px;
-  margin: 20px;
+  margin: 0;
+  /* white-space: nowrap; */
+}
+
+input[type="range"] {
+  flex-grow: 1;
+}
+
+select {
+  flex-grow: 1;
+  height: 40px;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 }
 
-/* Astar */
+.button-container button {
+  font-size: 20px;
+  height: 50px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0px;
+}
+
 #gridContainer {
   display: grid;
-  grid-template-columns: repeat(40, 1fr);
   gap: 1px;
   margin: 0 auto;
-  margin-bottom: 20px;
-  width: fit-content;
-}
-
-.size-container {
-  display: flex;
-  justify-content: center;
-}
-
-.row {
-  display: contents;
+  margin-bottom: 50px;
+  width: 600px;
+  height: 600px;
 }
 
 .cell {
-  width: 30px;
-  height: 30px;
   border: 1px solid #ddd;
   background-color: #fff;
   transition: background-color 0.3s;
   position: relative;
-}
-
-.cell:hover {
-  background-color: #eee;
 }
 
 .cell:hover {
@@ -59,5 +107,13 @@ button {
 }
 
 .path {
-  background-color: orange;
+  background-color: tomato;
+}
+
+.closed {
+  background-color: chocolate;
+}
+
+.open {
+  background-color: lightsalmon;
 }
