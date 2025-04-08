@@ -41,11 +41,11 @@ document.getElementById("clusterButton").addEventListener("click", function() {
         return;
     }
     if (points.length < numberClust)  {
-        alert("Количество кластеров больше, чем колчиство точек!");
+        alert("Количество кластеров больше, чем количество точек!");
         return;
     }
     initializeCenters(numberClust); // количество кластеров
-    kMeansClustering();
+    kMeansClustering(numberClust);
 });
 
 function initializeCenters(numberClust) {
@@ -56,8 +56,8 @@ function initializeCenters(numberClust) {
     }
 }
 
-function kMeansClustering() {
-    clusters = Array.from({ length: centers.length }, () => []);
+function kMeansClustering(numberClust) {
+    clusters = Array.from({ length: numberClust }, () => []);
 
     //кластеризация тут
     for (let i = 0; i < points.length; i++) {
@@ -66,7 +66,7 @@ function kMeansClustering() {
         clusters[minIndex].push(points[i]);
     }
     //тут обновление цветов пошло
-    for (let j = 0; j < centers.length-numberClust; j++) {
+    for (let j = 0; j < centers.length; j++) {
         if (clusters[j].length > 0) {
             centers[j] = getNewCenter(clusters[j]);
         }

@@ -15,6 +15,11 @@ input
     padding: 15px 30px;
     border: 2px solid blueviolet;
     position: relative;
-    top: 15px;
+    top: 7px;
+    margin-left: 20px;
+}
+
+p
+{
     margin-left: 20px;
 }
