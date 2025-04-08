@@ -37,7 +37,11 @@ canvas.addEventListener("click",  function(mouseEvent) // ставит точк�
 document.getElementById("clusterButton").addEventListener("click", function() {
     const numberClust = parseInt(document.getElementById("numberClust").value);
     if (points.length === 0) {
-        alert("Сначала добавьте точки на поле");
+        alert("Сначала добавьте точки на поле!");
+        return;
+    }
+    if (points.length < numberClust)  {
+        alert("Количество кластеров больше, чем колчиство точек!");
         return;
     }
     initializeCenters(numberClust); // количество кластеров
@@ -84,16 +88,6 @@ function getNewCenter(cluster) {
 }
 
 function drawClusters() {
-    context.clearRect(0, 0, canvas.width, canvas.height); // очищаем канвас значит
-    for (let i = 0; i < points.length; i++) {
-        context.strokeStyle = 'blueviolet';
-        context.fillStyle = 'black';
-        context.beginPath();
-        context.arc(points[i].pointX, points[i].pointY, 10, 0, 2 * Math.PI);
-                context.stroke();
-                context.fill();
-    }
-
     for (let i = 0; i < clusters.length; i++) {
         context.fillStyle = collorCenter[i];
         for (let j = 0; j < clusters[i].length; j++) {
