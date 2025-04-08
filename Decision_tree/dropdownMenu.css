@@ -1,0 +1,50 @@
+/* Стили для выпадающего списка */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  /* Стиль для кнопки активации выпадающего списка */
+  .dropdown-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  /* Стиль для содержимого выпадающего списка - скрытого по умолчанию */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    width: 100%;
+    z-index: 100;
+  }
+  
+  /* Показать выпадающее меню при наведении */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Стиль для ссылок внутри выпадающего меню */
+  .dropdown-content a {
+    color: #040d13;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  /* Эффект при наведении на ссылки в выпадающем меню */
+  .dropdown-content a:hover {
+    background-color:orange;
+  }
+  
+  /* Эффект при нажатии на ссылки */
+  .dropdown-content a:active {
+    border-style: inset;
+  }
