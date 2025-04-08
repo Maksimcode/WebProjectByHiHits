@@ -1,38 +1,38 @@
-// Grid variables
-const ROWS = 40;
-const COLS = 40;
-let grid = [];
-
-// Start and goal variables
-let startCell = null;
-let goalCell = null;
-
-// Flags
-let isGeneratingObstacles = false;
-let isPathGenerated = false;
-
-// Create grid
 function createGrid() {
-  // const ROWS = parseInt(document.getElementById("gridSize").value);
-  // const COLS = parseInt(document.getElementById("gridSize").value);
+  const gridSize = parseInt(document.getElementById("gridSize").value);
+
+  isGeneratingObstacles = false;
+  isPathGenerated = false;
+  startCell = null;
+  goalCell = null;
+
   const container = document.getElementById("gridContainer");
   container.innerHTML = "";
 
   grid = [];
 
-  for (let row = 0; row < ROWS; row++) {
+  const cellSize = 600 / gridSize;
+
+  container.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
+  container.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
+
+  for (let row = 0; row < gridSize; row++) {
     const rowElement = document.createElement("div");
     rowElement.className = "row";
 
     let rowArray = [];
 
-    for (let col = 0; col < COLS; col++) {
+    for (let col = 0; col < gridSize; col++) {
       const cell = document.createElement("div");
       cell.className = "cell";
       cell.dataset.row = row;
       cell.dataset.col = col;
-      cell.addEventListener("mouseover", handleCellHover);
+
+      cell.style.width = `${cellSize}px`;
+      cell.style.height = `${cellSize}px`;
+
       cell.addEventListener("click", handleCellClick);
+
       rowElement.appendChild(cell);
       rowArray.push(cell);
     }
@@ -42,33 +42,16 @@ function createGrid() {
   }
 }
 
-/*// Randomize obstacles
-function randomizeObstacles() {
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
-      const cell = grid[row][col];
-
-      if (cell !== startCell && cell !== goalCell) {
-        const shouldObstacle = Math.random() < 0.3;
-        cell.classList.toggle('obstacle', shouldObstacle);
-      }
-    }
-  }
-}*/
-
-// Generate maze using DFS
 function generateMazeDFS() {
-  // Initialize all cells as obstacles
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
       grid[row][col].classList.add("obstacle");
     }
   }
-  // Adjust ROWS and COLS to be odd to ensure the maze can be carved properly
-  const effectiveRows = ROWS - (ROWS % 2 === 0 ? 1 : 0);
-  const effectiveCols = COLS - (COLS % 2 === 0 ? 1 : 0);
 
-  // Utility function to get the neighbors
+  const effectiveRows = gridSize - (gridSize % 2 === 0 ? 1 : 0);
+  const effectiveCols = gridSize - (gridSize % 2 === 0 ? 1 : 0);
+
   function getNeighbors(row, col) {
     const neighbors = [];
     const directions = [
@@ -92,26 +75,19 @@ function generateMazeDFS() {
     return neighbors;
   }
 
-  // The DFS function to carve out the maze
   function carveMaze(row, col) {
-    // Mark the current cell as free space
     grid[row][col].classList.remove("obstacle");
-    // Randomly order the neighbors to visit
     const neighbors = getNeighbors(row, col);
-    shuffleArray(neighbors); // Shuffle the neighbors to ensure randomness
+    shuffleArray(neighbors);
 
     for (let [nRow, nCol] of neighbors) {
-      // Check if the neighbor is an obstacle and has not been visited
       if (grid[nRow][nCol].classList.contains("obstacle")) {
-        // Knock down the wall between the current cell and the neighbor
         grid[(row + nRow) / 2][(col + nCol) / 2].classList.remove("obstacle");
-        // Recursively apply DFS to the neighbor
         carveMaze(nRow, nCol);
       }
     }
   }
 
-  // Utility function to shuffle an array
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -119,25 +95,24 @@ function generateMazeDFS() {
     }
   }
 
-  // Start the maze generation from a random cell within the adjusted bounds
   const startRow = Math.floor(Math.random() * (effectiveRows - 2)) + 1;
   const startCol = Math.floor(Math.random() * (effectiveCols - 2)) + 1;
   carveMaze(startRow - (startRow % 2), startCol - (startCol % 2));
 }
 
-/* // Start the maze generation from a random cell
-  const startRow = Math.floor(Math.random() * ROWS);
-  const startCol = Math.floor(Math.random() * COLS);
-  carveMaze(startRow - startRow % 2, startCol - startCol % 2); // Ensure we start at an even index
-}*/
-//
-
 // Clear obstacles, path, and start/end points
 function refreshGrid() {
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
       const cell = grid[row][col];
-      cell.classList.remove("obstacle", "path", "start", "goal");
+      cell.classList.remove(
+        "obstacle",
+        "path",
+        "start",
+        "goal",
+        "open",
+        "closed"
+      );
     }
   }
 
@@ -147,10 +122,9 @@ function refreshGrid() {
   isGeneratingObstacles = false;
 }
 
-// Generate path using A* algorithm
 function generatePath() {
   if (!startCell || !goalCell) {
-    console.log("Please set the starting and goal points.");
+    alert("Please set the starting and goal points.");
     return;
   }
 
@@ -158,11 +132,16 @@ function generatePath() {
   const closedSet = [];
   let pathFound = false;
 
+  // Добавляем начальную точку в openSet
   openSet.push(startCell);
+
+  // Счетчик для задержки анимации
+  let animationDelay = animationSpeed;
 
   while (openSet.length > 0) {
     let winner = 0;
 
+    // Находим клетку с наименьшим значением f
     for (let i = 0; i < openSet.length; i++) {
       if (openSet[i].f < openSet[winner].f) {
         winner = i;
@@ -171,19 +150,29 @@ function generatePath() {
 
     const current = openSet[winner];
 
+    // Если текущая клетка - это целевая клетка, путь найден
     if (current === goalCell) {
       pathFound = true;
       break;
     }
 
+    // Удаляем текущую клетку из openSet и добавляем в closedSet
     openSet.splice(winner, 1);
     closedSet.push(current);
 
+    // Анимация для клеток в closedSet
+    setTimeout(() => {
+      current.classList.remove("open"); // Убираем класс "open", если он был
+      current.classList.add("closed");
+    }, animationDelay);
+
+    // Получаем соседей текущей клетки
     const neighbors = getNeighbors(current);
 
     for (let i = 0; i < neighbors.length; i++) {
       const neighbor = neighbors[i];
 
+      // Проверяем, что соседняя клетка не в closedSet и не является препятствием
       if (
         !closedSet.includes(neighbor) &&
         !neighbor.classList.contains("obstacle")
@@ -197,15 +186,25 @@ function generatePath() {
         } else {
           neighbor.g = tempG;
           openSet.push(neighbor);
+
+          // Анимация для клеток в openSet
+          setTimeout(() => {
+            neighbor.classList.add("open");
+          }, animationDelay);
         }
 
+        // Вычисляем значения h и f для соседней клетки
         neighbor.h = heuristic(neighbor, goalCell);
         neighbor.f = neighbor.g + neighbor.h;
         neighbor.previous = current;
       }
     }
+
+    // Увеличиваем задержку для следующей анимации
+    animationDelay += animationSpeed;
   }
 
+  // Если путь найден, строим его
   if (pathFound) {
     let path = [];
     let temp = goalCell;
@@ -216,11 +215,15 @@ function generatePath() {
       temp = temp.previous;
     }
 
+    // Анимация построения итогового пути
     for (let i = path.length - 1; i >= 0; i--) {
       setTimeout(() => {
+        path[i].classList.remove("open", "closed"); // Убираем предыдущие классы
         path[i].classList.add("path");
-      }, 50 * (path.length - i));
+      }, animationDelay + animationSpeed * (path.length - i));
     }
+  } else {
+    alert("path now found:(");
   }
 
   isPathGenerated = true;
@@ -241,49 +244,47 @@ function getNeighbors(cell) {
   const neighbors = [];
 
   if (row > 0) neighbors.push(grid[row - 1][col]);
-  if (row < ROWS - 1) neighbors.push(grid[row + 1][col]);
+  if (row < gridSize - 1) neighbors.push(grid[row + 1][col]);
   if (col > 0) neighbors.push(grid[row][col - 1]);
-  if (col < COLS - 1) neighbors.push(grid[row][col + 1]);
+  if (col < gridSize - 1) neighbors.push(grid[row][col + 1]);
 
   return neighbors;
-}
-
-// Event handlers for cell interactions
-function handleCellHover(event) {
-  if (!isPathGenerated && isGeneratingObstacles && !event.buttons) {
-    const cell = event.target;
-    cell.classList.toggle("obstacle");
-  }
 }
 
 function handleCellClick(event) {
   const cell = event.target;
 
-  if (isGeneratingObstacles) {
+  if (isGeneratingObstacles || isDrawingObstacles) {
     cell.classList.toggle("obstacle");
   } else {
     if (!isPathGenerated) {
-      if (!startCell) {
-        cell.classList.add("start");
-        startCell = cell;
-      } else if (!goalCell) {
-        cell.classList.add("goal");
-        goalCell = cell;
+      if (isSelectingStart) {
+        if (!startCell) {
+          cell.classList.add("start");
+          startCell = cell;
+        } else {
+          startCell.classList.remove("start");
+          cell.classList.add("start");
+          startCell = cell;
+        }
+      } else if (isSelectingEnd) {
+        if (!goalCell) {
+          cell.classList.add("goal");
+          goalCell = cell;
+        } else {
+          goalCell.classList.remove("goal");
+          cell.classList.add("goal");
+          goalCell = cell;
+        }
       } else {
-        startCell.classList.remove("start");
-        goalCell.classList.remove("goal");
-        cell.classList.add("start");
-        startCell = cell;
-        goalCell = null;
-        isPathGenerated = false;
+        alert("something wrong");
       }
     }
   }
 }
 
-// Button event handlers
 document.getElementById("generateGrid").addEventListener("click", function () {
-  refreshGrid();
+  if (grid.length != 0) refreshGrid();
   createGrid();
 });
 document
@@ -295,5 +296,53 @@ document
   .getElementById("randomizeObstacles")
   .addEventListener("click", generateMazeDFS);
 
-// Initial grid generation
+let grid = [];
+
+const gridContainer = document.getElementById("gridContainer");
+
+let startCell = null;
+let goalCell = null;
+
+let isGeneratingObstacles = false;
+let isPathGenerated = false;
+let isDrawingObstacles = true;
+let isSelectingStart = false;
+let isSelectingEnd = false;
+
+const gridSizeInput = document.getElementById("gridSize");
+const showSize = document.getElementById("showSize");
+let gridSize = parseInt(gridSizeInput.value);
+gridSizeInput.addEventListener("input", function () {
+  gridSize = parseInt(gridSizeInput.value);
+  showSize.textContent = gridSize;
+  createGrid();
+});
+
+const timeoutInput = document.getElementById("timeout");
+const showTimeout = document.getElementById("showTimeout");
+let animationSpeed = parseInt(timeoutInput.value);
+timeoutInput.addEventListener("input", function () {
+  animationSpeed = parseInt(timeoutInput.value);
+  showTimeout.textContent = animationSpeed;
+});
+
+const constructionMode = document.getElementById("selectionConstruct");
+constructionMode.addEventListener("change", function () {
+  if (constructionMode.value == document.getElementById("drawObstacles").text) {
+    isDrawingObstacles = true;
+    isSelectingStart = false;
+    isSelectingEnd = false;
+  } else if (
+    constructionMode.value == document.getElementById("selectStart").text
+  ) {
+    isSelectingStart = true;
+    isDrawingObstacles = false;
+    isSelectingEnd = false;
+  } else {
+    isSelectingEnd = true;
+    isSelectingStart = false;
+    isDrawingObstacles = false;
+  }
+});
+
 createGrid();
