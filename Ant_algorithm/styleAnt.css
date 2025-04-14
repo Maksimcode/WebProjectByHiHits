@@ -1,18 +1,79 @@
-.point{
-    position: absolute;
-    top:100px;
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    border-radius: 50px;
-    transform: translate(-50%, -50%)
-    
-  }
+body {
+  background: linear-gradient(to right, orange, pink);
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 500px;
+}
 
-#controls button{
-    font-size: 20px;
-    height: 50px;
-    width: 300px;
-    margin: 20px;
-    cursor: pointer;
+button{
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#back_to_main {
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  top: 0px;
+  left: 10px;
+  background: transparent;
+  border: none;
+  transition: transform 0.2s ease-in-out;
+  z-index: 1000; /* Добавлено свойство для поднятия уровня */
+}
+
+#back_to_main:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+
+#canvas-container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  margin: 30px auto;
+}
+
+canvas {
+  position: absolute;
+  left: 0;
+  top: 0; 
+  border: 1px solid black;
+}
+
+
+#canvas-dynamic {
+  pointer-events: none;
+}
+
+.controls {
+  margin-left: 40px;
+}
+
+#resultsList {
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 5px;
+  list-style: none;
+}
+.param-group {
+  margin-bottom: 10px;
+}
+label {
+  display: block;
+  font-size: 14px;
+}
+input[type="range"] {
+  width: 300px;
 }

@@ -1,36 +1,92 @@
 <!DOCTYPE html>
-
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="shortcut icon" href="../catIcon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="styleAnt.css" type="text/css" />
-    <link rel="stylesheet" href="../styles.css" type="text/css" />
-
-    <title>WebCam Algos 2</title>
-  </head>
-  <body>
-    <h1>Муравьиный алгоритм!&#128028;</h1>
-    <div id="controls">
-      <button id="run">Запустить алгоритм</button>
-      <button id="clear">Очистить</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link href="./styleAnt.css" rel="stylesheet">
+  <title>Муравьиный алгоритм</title>
+</head>
+<body>
+  <h1>Муравьиный алгоритм</h1>
+  <button
+  type="button"
+  onclick="location.href='../index.html'"
+  id="back_to_main"
+>
+  <img
+    src="../Undo-Transparent-Background.png"
+    alt="в главное меню"
+    width="60px"
+    height="60px"
+  />
+</button>
+  <div id="canvas-container">
+    <canvas id="canvas-background" width="600" height="400"></canvas>
+    <canvas id="canvas-dynamic" width="600" height="400"></canvas>
+  </div>
+  
+  <div class="controls">
+    <div class="param-group">
+      <label for="iterationsInput">
+        Количество итераций: <span id="iterationsValue">100</span>
+      </label>
+      <input type="range" id="iterationsInput" min="1" max="500" step="1" value="100" 
+             oninput="document.getElementById('iterationsValue').textContent = this.value">
     </div>
-
-    <button
-      type="button"
-      onclick="location.href='../index.html'"
-      id="back_to_main"
-    >
-      <img
-        src="../Undo-Transparent-Background.png"
-        alt="в главное меню"
-        width="60px"
-        height="60px"
-      />
-    </button>
-    <script src="ant.js"></script>
-  </body>
+    
+    <div class="param-group">
+      <label for="delayInput">
+        Задержка итерации (мс): <span id="delayValue">10</span>
+      </label>
+      <input type="range" id="delayInput" min="0" max="1000" step="10" value="10" 
+             oninput="document.getElementById('delayValue').textContent = this.value">
+    </div>
+    
+    <div class="param-group">
+      <label for="alphaInput">
+        Alpha (влияние феромона): <span id="alphaValue">1</span>
+      </label>
+      <input type="range" id="alphaInput" min="0" max="5" step="0.1" value="1" 
+             oninput="document.getElementById('alphaValue').textContent = this.value">
+    </div>
+    
+    <div class="param-group">
+      <label for="betaInput">
+        Beta (влияние эвристики): <span id="betaValue">5</span>
+      </label>
+      <input type="range" id="betaInput" min="0" max="10" step="0.1" value="5" 
+             oninput="document.getElementById('betaValue').textContent = this.value">
+    </div>
+    
+    <div class="param-group">
+      <label for="evaporationInput">
+        Эвапорация (0-1): <span id="evaporationValue">0.5</span>
+      </label>
+      <input type="range" id="evaporationInput" min="0" max="1" step="0.1" value="0.5" 
+             oninput="document.getElementById('evaporationValue').textContent = this.value">
+    </div>
+    
+    <div class="param-group">
+      <label for="qInput">
+        Q (коэффициент отклада): <span id="qValue">100</span>
+      </label>
+      <input type="range" id="qInput" min="1" max="500" step="1" value="100" 
+             oninput="document.getElementById('qValue').textContent = this.value">
+    </div>
+    
+    <button id="startBtn">Запустить алгоритм</button>
+  </div>
+  
+  <div class="controls">
+    <p>Минимальное расстояние: <span id="bestDistance">-</span></p>
+  </div>
+  
+  <div class="controls">
+    <h3>Результаты итераций</h3>
+    <ul id="resultsList"></ul>
+  </div>
+  
+  <script type="module" src="./main.js"></script>
+</body>
 </html>
