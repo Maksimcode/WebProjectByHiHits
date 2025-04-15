@@ -8,10 +8,19 @@
 
     <link
       rel="shortcut icon"
-      href="../static/catIcon.ico"
+      href="{{ url_for('main_page.static', filename='catIcon.ico') }}"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="../static/style.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('main_page.static', filename='styles.css') }}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('neural_network.static', filename='style.css') }}"
+      type="text/css"
+    />
 
     <title>WebCam Algos Neuro</title>
   </head>
@@ -20,11 +29,11 @@
 
     <button
       type="button"
-      onclick="location.href='../index.html'"
+      onclick="location.href='/main_page/'"
       id="back_to_main"
     >
       <img
-        src="../static/Undo-Transparent-Background.png"
+        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
         alt="в главное меню"
         width="60px"
         height="60px"
@@ -38,8 +47,10 @@
 
     <p id="result">Результат:</p>
 
-    <button onclick="predictDigit()">Распознать</button>
-    <button onclick="clearCanvas()">Очистить</button>
+    <div class="button-container">
+      <button onclick="predictDigit()">Распознать</button>
+      <button onclick="clearCanvas()">Очистить</button>
+    </div>
   </body>
-  <script src="../static/script.js"></script>
+  <script src="{{ url_for('neural_network.static', filename='script.js') }}"></script>
 </html>
