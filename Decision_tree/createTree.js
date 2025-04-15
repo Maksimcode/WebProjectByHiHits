@@ -162,3 +162,5 @@ export function makeTree(inputData) {
   
   return root;
 }
+
+export { Node };
