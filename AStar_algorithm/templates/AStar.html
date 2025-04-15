@@ -6,9 +6,21 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="../catIcon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../styles.css" type="text/css" />
-    <link rel="stylesheet" href="styleAStar.css" type="text/css" />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('main_page.static', filename='catIcon.ico') }}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('main_page.static', filename='styles.css') }}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('AStar_algorithm.static', filename='styleAStar.css') }}"
+      type="text/css"
+    />
 
     <title>WebCam Algos A*</title>
   </head>
@@ -17,11 +29,11 @@
 
     <button
       type="button"
-      onclick="location.href='../index.html'"
+      onclick="location.href='/main_page/'"
       id="back_to_main"
     >
       <img
-        src="../Undo-Transparent-Background.png"
+        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
         alt="в главное меню"
         width="60px"
         height="60px"
@@ -64,5 +76,5 @@
       </div>
     </div>
   </body>
-  <script src="scriptAStar.js"></script>
+  <script src="{{ url_for('AStar_algorithm.static', filename='scriptAStar.js') }}"></script>
 </html>
