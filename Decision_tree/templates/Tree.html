@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('main_page.static', filename='catIcon.ico') }}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('main_page.static', filename='styles.css') }}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('decision_tree.static', filename='decisionTree.css') }}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('decision_tree.static', filename='dropdownMenu.css') }}"
+      type="text/css"
+    />
+
+    <title>Дерево решений</title>
+  </head>
+  <body>
+    <button
+      type="button"
+      onclick="location.href='/main_page/'"
+      id="back_to_main"
+    >
+      <img
+        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
+        alt="в главное меню"
+        width="60px"
+        height="60px"
+      />
+    </button>
+    <div class="fileInputDiv">
+      <input id="fileInput" type="file" />
+    </div>
+    <div class="container">
+      <label class="title">Дерево решений</label>
+      <div style="display: flex; gap: 20px; margin-top: 20px">
+        <!-- Левая группа кнопок -->
+        <div
+          id="buttons"
+          style="display: flex; flex-direction: column; gap: 10px; width: 200px"
+        >
+          <button>
+            <label id="fileInputButton" for="fileInput">Загрузить файл</label>
+          </button>
+          <div class="dropdown">
+            <button class="dropdown-button">Выбрать пример</button>
+            <div class="dropdown-content">
+              <a href="#" id="firstButton">1</a>
+              <a href="#" id="secondButton">2</a>
+              <a href="#" id="thirdButton">3</a>
+              <a href="#" id="fourthButton">4</a>
+            </div>
+          </div>
+          <button id="makeTree">Построить дерево</button>
+          <button id="deleteTree">Очистить</button>
+        </div>
+
+        <!-- Центральная область для дерева -->
+        <div id="tree" style="flex-grow: 1; max-height: 500px; overflow: auto">
+          <ul id="root"></ul>
+        </div>
+
+        <!-- Правая группа элементов -->
+        <div
+          style="display: flex; flex-direction: column; gap: 10px; width: 300px"
+        >
+          <!-- Блок для пользовательского ввода и обхода дерева -->
+          <div
+            style="
+              border: 1px solid #ddd;
+              padding: 10px;
+              border-radius: 5px;
+              margin-bottom: 15px;
+            "
+          >
+            <h4 style="margin-top: 0">Обход дерева с данными:</h4>
+            <input type="text" id="userInput" placeholder="Введите данные" />
+            <button id="userBypass" style="margin-top: 10px">
+              Обойти дерево
+            </button>
+          </div>
+
+          <!-- Блок для предсказаний -->
+          <div
+            id="predictionContainer"
+            style="border: 1px solid #ddd; padding: 10px; border-radius: 5px"
+          >
+            <h4 style="margin-top: 0">Предсказание на новых данных:</h4>
+            <div id="result" style="margin-top: 10px; font-weight: bold"></div>
+
+            <!-- Контейнер для формы предсказания (будет заполнен динамически) -->
+            <div id="inputFormContainer"></div>
+          </div>
+
+          <!-- Блок для результатов -->
+        </div>
+      </div>
+      <!-- Легенда -->
+      <div
+        style="
+          margin-top: 20px;
+          padding: 10px;
+          background-color: #f0f0f0;
+          border-radius: 5px;
+        "
+      >
+        <h4 style="margin-top: 0">Легенда:</h4>
+        <div style="display: flex; gap: 20px">
+          <div>
+            <span
+              style="
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                background-color: #ff6b6b;
+                margin-right: 5px;
+              "
+            ></span>
+            <span>Посещенный узел</span>
+          </div>
+          <div>
+            <span
+              style="
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                background-color: #ffd166;
+                margin-right: 5px;
+              "
+            ></span>
+            <span>Альтернативный путь (для неизвестных значений)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="{{ url_for('decision_tree.static', filename='visualization.js') }}"
+      type="module"
+    ></script>
+    <script
+      src="{{ url_for('decision_tree.static', filename='field.js') }}"
+      type="module"
+    ></script>
+  </body>
+</html>
