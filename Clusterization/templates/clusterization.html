@@ -5,11 +5,21 @@
     <meta charset="UTF-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="shortcut icon" href="../catIcon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../styles.css" type="text/css" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
-
+    <link
+    rel="shortcut icon"
+    href="{{ url_for('main_page.static', filename='catIcon.ico') }}"
+    type="image/x-icon"
+  />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('main_page.static', filename='styles.css') }}"
+    type="text/css"
+  />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('clusterization.static', filename='style.css') }}"
+    type="text/css"
+  />
     <title>WebCam Algos Clusterization</title>
   </head>
   <body>
@@ -17,11 +27,11 @@
 
     <button
       type="button"
-      onclick="location.href='../index.html'"
+      onclick="location.href='/main_page/'"
       id="back_to_main"
     >
       <img
-        src="../Undo-Transparent-Background.png"
+        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
         alt="в главное меню"
         width="60px"
         height="60px"
@@ -34,6 +44,6 @@
     <p>Запустите алгоритм</p>
     <button id="clusterButton" style="width: 260px; height: 80px;">Запустить кластеризацию</button>
     <canvas id = "canvas" width = "650" height = "650"></canvas>
-    <script src="app.js"></script>
+    <script src="{{ url_for('clusterization.static', filename='app.js') }}"></script>
   </body>
 </html>
