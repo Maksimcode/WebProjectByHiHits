@@ -66,7 +66,7 @@ function kMeansClustering(numberClust) {
         clusters[minIndex].push(points[i]);
     }
     //тут обновление цветов пошло
-    for (let j = 0; j < centers.length; j++) {
+    for (let j = 0; j < centers.length-numberClust; j++) {
         if (clusters[j].length > 0) {
             centers[j] = getNewCenter(clusters[j]);
         }
