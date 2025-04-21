@@ -6,47 +6,49 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="catIcon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('main_page.static', filename='catIcon.ico') }}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('main_page.static', filename='styles.css') }}"
+      type="text/css"
+    />
 
     <title>WebCam</title>
   </head>
-  <script src="test.js"></script>
+  <!-- <script src="test.js"></script> -->
   <body>
     <h1>Крутая главная страница сайта</h1>
 
     <div class="button-container">
-      <button
-        type="button"
-        onclick="location.href='AStar_algorithm/AStar.html'"
-      >
+      <button type="button" onclick="location.href='/astar_algorithm/astar'">
         Алгоритм A*
       </button>
       <button
         type="button"
-        onclick="location.href='Clusterization/clusterization.html'"
+        onclick="location.href='/clusterization/clusterization'"
       >
         Алгоритм кластеризации
       </button>
       <button
         type="button"
-        onclick="location.href='Genetic_Algorithm/Genetic.html'"
+        onclick="location.href='/genetic_algorithm/genetic'"
       >
         Генетический алгоритм
       </button>
     </div>
 
     <div class="button-container">
-      <button type="button" onclick="location.href='Ant_Algorithm/Ant.html'">
+      <button type="button" onclick="location.href='/ant_algorithm/ant'">
         Муравьиный алгоритм
       </button>
-      <button type="button" onclick="location.href='Decision_tree/Tree.html'">
+      <button type="button" onclick="location.href='/decision_tree/tree'">
         Дерево решений
       </button>
-      <button
-        type="button"
-        onclick="location.href='Neural_network/templates/Neuro.html'"
-      >
+      <button type="button" onclick="location.href='/neural_network/neuro'">
         Нейронная сеть
       </button>
     </div>

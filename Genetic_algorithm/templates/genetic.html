@@ -18,14 +18,14 @@
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('neural_network.static', filename='style.css') }}"
+      href="{{ url_for('genetic_algorithm.static', filename='genetic.css') }}"
       type="text/css"
     />
 
-    <title>WebCam Algos Neuro</title>
+    <title>WebCam Algos genetic</title>
   </head>
   <body>
-    <h1>Нейронная сеть!&#128565;</h1>
+    <h1>Генетический алгоритм!</h1>
 
     <button
       type="button"
@@ -39,18 +39,5 @@
         height="60px"
       />
     </button>
-
-    <h2>Нарисуйте цифру:</h2>
-    <div class="canvas-container">
-      <canvas id="drawingCanvas" width="300" height="300"></canvas>
-    </div>
-
-    <p id="result">Результат:</p>
-
-    <div class="button-container">
-      <button onclick="predictDigit()">Распознать</button>
-      <button onclick="clearCanvas()">Очистить</button>
-    </div>
   </body>
-  <script src="{{ url_for('neural_network.static', filename='script.js') }}"></script>
 </html>
