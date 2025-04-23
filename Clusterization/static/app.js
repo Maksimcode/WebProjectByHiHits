@@ -1,15 +1,20 @@
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const numberClust = parseInt(document.getElementById("numberClust").value);
+let points = [];
 
 //базовая кластеризация
-let points = [];
 let centers = [];
 let clusters = [];
 let allDistances = [];
-let collorCenter = ['red','green','blue','yellow','purple','orange', 'pink'];
+let collorCenter = ['red','green','blue','yellow','purple','orange', 'pink','brown','grey','white'];
 let flagPoints = true;
 let flagCenters = true;
+
+let clustersHierarchy = [];
+//let dictenceHierarchy = [];
+let centroids = [];
+let blackColoring  = [[0, 0], [0, 180], [180, 0], [90,270], [270, 90], [45, 225], [225, 45], [135, 315], [315, 135]];
 
 canvas.addEventListener("click",  function(mouseEvent) // ставит точки на экране
 {
@@ -23,7 +28,8 @@ canvas.addEventListener("click",  function(mouseEvent) // ставит точк�
             pointY: y,
         }
         points.push(point);
-        context.strokeStyle = 'blueviolet';
+        clustersHierarchy.push([point]);
+        context.strokeStyle = 'white';
         context.fillStyle='black';
         context.beginPath(); //тут чтоб не сливались точечки
         context.arc(x, y, 10, 0, 2 * Math.PI);
@@ -45,25 +51,33 @@ document.getElementById("clusterButton").addEventListener("click", function() {
         return;
     }
     initializeCenters(numberClust); // количество кластеров
-    kMeansClustering(numberClust);
+    Clustering(numberClust);
 });
 
 function initializeCenters(numberClust) {
     centers = [];
+    centroids = [];
     for (let i = 0; i < numberClust; i++) {
-        let randomIndex = Math.floor(Math.random() * points.length);
-        centers.push(points[randomIndex]);
+        let randomIndex1 = Math.floor(Math.random() * points.length);
+        centers.push(points[randomIndex1]);
+    }
+    for (let i = 0; i < numberClust; i++) {
+        let randomIndex2 = Math.floor(Math.random() * points.length);
+        centroids.push(points[randomIndex2]);
     }
 }
 
-function kMeansClustering(numberClust) {
+function Clustering(numberClust) {
     clusters = Array.from({ length: numberClust }, () => []);
-
+    clustersHierarchy = Array.from({ length: numberClust }, () => []);
     //кластеризация тут
     for (let i = 0; i < points.length; i++) {
-       let distances = centers.map(center => getDistance(points[i], center));
-        let minIndex = distances.indexOf(Math.min(...distances));
-        clusters[minIndex].push(points[i]);
+        let distances1 = centers.map(center => getDistance(points[i], center));
+        let distances2 = centroids.map(center => getDistance(points[i], center));
+        let minIndex1 = distances1.indexOf(Math.min(...distances1));
+        let minIndex2 = distances2.indexOf(Math.min(...distances2));
+        clusters[minIndex1].push(points[i]);
+        clustersHierarchy[minIndex2].push(points[i]);
     }
     //тут обновление цветов пошло
     for (let j = 0; j < centers.length-numberClust; j++) {
@@ -71,7 +85,13 @@ function kMeansClustering(numberClust) {
             centers[j] = getNewCenter(clusters[j]);
         }
     }
+    for (let j = 0; j < centroids.length-numberClust; j++) {
+        if (clustersHierarchy[j].length > 0) {
+            centroids[j] = getNewCenter(clustersHierarchy[j]);
+        }
+    }
     drawClusters();
+    drawHierarchy();
 }
 
 function getDistance(point1, point2) {
@@ -87,6 +107,27 @@ function getNewCenter(cluster) {
     };
 }
 
+function getRadians(degrees) 
+{
+  return (Math.PI / 180) * degrees;
+}
+
+function drawHierarchy()
+{
+    for(let i = 0; i < clustersHierarchy.length; i++)
+    {
+        for(let j = 0; j < clustersHierarchy[i].length; j++)
+        {
+            context.beginPath();
+            context.strokeStyle = "white";
+            context.fillStyle = "black";
+            context.arc(clustersHierarchy[i][j].pointX, clustersHierarchy[i][j].pointY, 10,  getRadians(blackColoring[i][0]), getRadians(blackColoring[i][1]));
+            context.fill();
+            context.stroke()
+        }
+    }
+}
+
 function drawClusters() {
     for (let i = 0; i < clusters.length; i++) {
         context.fillStyle = collorCenter[i];
@@ -96,7 +137,6 @@ function drawClusters() {
             context.fill();
         }
     }
-
     // тут рисуем центры кластеров
     for (let i = 0; i < centers.length; i++) {
         context.fillStyle = collorCenter[i];
