@@ -21,3 +21,11 @@ canvas {
   display: flex;
   justify-content: space-between;
 }
+
+.range-container,
+.color-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}

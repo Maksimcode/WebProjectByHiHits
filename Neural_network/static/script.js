@@ -6,9 +6,24 @@ function setWhiteBackground() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-ctx.lineWidth = 10;
+const lineWidthInput = document.getElementById("lineWidth");
+const showLineWidth = document.getElementById("showLineWidth");
+ctx.lineWidth = parseInt(lineWidthInput.value);
+lineWidthInput.addEventListener("input", function () {
+  ctx.lineWidth = parseInt(lineWidthInput.value);
+  showLineWidth.textContent = ctx.lineWidth;
+});
+
 ctx.lineCap = "round";
-ctx.strokeStyle = "#000000";
+
+const colorInput = document.getElementById("color");
+ctx.strokeStyle = colorInput.value;
+colorInput.addEventListener("input", function () {
+  ctx.strokeStyle = colorInput.value;
+});
+
+const resultElement = document.getElementById("result");
+const probabilitiesElement = document.getElementById("probabilities");
 
 let isDrawing = false;
 
@@ -32,9 +47,10 @@ canvas.addEventListener("mouseup", () => {
   ctx.closePath();
 });
 
-// Очистка Canvas
 function clearCanvas() {
   setWhiteBackground();
+  resultElement.innerText = `Результат: `;
+  probabilitiesElement.innerText = `Вероятности: `;
 }
 
 function saveImage(matrix, filename, width, height) {
@@ -146,9 +162,14 @@ function preprocessImage(canvas) {
   const pixels = imageData.data;
 
   const grayscale = [];
+
   for (let i = 0; i < pixels.length; i += 4) {
-    const avg = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-    grayscale.push(1 - avg / 255);
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+
+    const isWhite = r === 255 && g === 255 && b === 255;
+    grayscale.push(isWhite ? 0 : 1);
   }
 
   let matrix = [];
@@ -227,7 +248,7 @@ async function predictDigit() {
 
   try {
     const predictions = await Promise.all(
-      processedDigits.map(async (digit) => {
+      processedDigits.map(async (digit, index) => {
         const response = await fetch("/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -239,14 +260,48 @@ async function predictDigit() {
         }
 
         const result = await response.json();
-        return result.prediction;
+        const predictedDigit = result.prediction;
+
+        const probabilities = result.probabilities;
+        const sortedProbabilities = Object.entries(probabilities)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 3);
+        const top3ProbabilitiesString = sortedProbabilities
+          .map(([digit, prob]) => `${digit}: ${prob}%`)
+          .join(", ");
+
+        const label = getNumberLabel(index);
+
+        return { label, predictedDigit, top3ProbabilitiesString };
       })
     );
 
-    const number = predictions.join("");
-    document.getElementById("result").innerText = `Результат: ${number}`;
+    const number = predictions.map((p) => p.predictedDigit).join("");
+
+    const probabilitiesDetails = predictions
+      .map((p) => `\n${p.label} ${p.top3ProbabilitiesString}`)
+      .join(" ");
+
+    resultElement.innerText = `Результат: ${number}`;
+    probabilitiesElement.innerText = `Вероятности: ${probabilitiesDetails}`;
   } catch (error) {
     console.error("Ошибка при отправке запроса:", error);
     alert("Произошла ошибка при распознавании числа.");
   }
+}
+
+function getNumberLabel(index) {
+  const labels = [
+    "First",
+    "Second",
+    "Third",
+    "Fourth",
+    "Fifth",
+    "Sixth",
+    "Seventh",
+    "Eighth",
+    "Ninth",
+    "Tenth",
+  ];
+  return `${labels[index]} number:`;
 }
