@@ -41,11 +41,18 @@
     </button>
 
     <h2>Нарисуйте цифру:</h2>
+    <div class="range-container">
+      <p>Current line width:</p>
+      <input type="range" min="10" max="30" value="10" id="lineWidth" />
+      <p id="showLineWidth">22</p>
+    </div>
+
     <div class="canvas-container">
-      <canvas id="drawingCanvas" width="300" height="300"></canvas>
+      <canvas id="drawingCanvas" width="750" height="400"></canvas>
     </div>
 
     <p id="result">Результат:</p>
+    <p id="probabilities">Вероятности:</p>
 
     <div class="button-container">
       <button onclick="predictDigit()">Распознать</button>

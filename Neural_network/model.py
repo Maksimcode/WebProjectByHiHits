@@ -146,7 +146,7 @@ def create_model(path="weights.json"):
 def predict(input, model):
     processed_image = input.flatten().reshape(1, -1)
     output = model.forward(processed_image, is_training=False)
-    probabilities = output
-    predicted_class = np.argmax(probabilities, axis=1)[0]
-    print(probabilities)
-    return int(predicted_class)
+    probabilities = output[0]
+    probabilities_percentage = {i: round(prob * 100, 2) for i, prob in enumerate(probabilities)}
+    predicted_class = np.argmax(probabilities)
+    return int(predicted_class), probabilities_percentage

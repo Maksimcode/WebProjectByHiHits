@@ -30,11 +30,16 @@ model = create_model(path="Neural_network\weights.json")
 def predict():
     data = request.json
     input_image = np.array(data['image']).reshape(1, -1)
-
     output = model.forward(input_image, is_training=False)
+
     predicted_class = np.argmax(output, axis=1)[0]
 
-    return jsonify({'prediction': int(predicted_class)})
+    probabilities = {i: round(prob * 100, 2) for i, prob in enumerate(output[0])}
+
+    return jsonify({
+        "prediction": int(predicted_class),
+        "probabilities": probabilities
+    })
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
