@@ -283,10 +283,10 @@ function handleCellClick(event) {
   }
 }
 
-document.getElementById("generateGrid").addEventListener("click", function () {
-  if (grid.length != 0) refreshGrid();
-  createGrid();
-});
+// document.getElementById("generateGrid").addEventListener("click", function () {
+//   if (grid.length != 0) refreshGrid();
+//   createGrid();
+// });
 document
   .getElementById("randomizeObstacles")
   .addEventListener("click", randomizeObstacles);
