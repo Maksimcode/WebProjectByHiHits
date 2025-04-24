@@ -1,7 +1,7 @@
 body {
   display: flex;
-  flex-direction: column; /* Все элементы в колонку */
-  align-items: center; /* Центрирование по горизонтали */
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
   margin: 0;
   font-family: Arial, sans-serif;

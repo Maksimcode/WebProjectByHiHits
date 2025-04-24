@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genetic Algorithm</title>
 
     <link
       rel="shortcut icon"
@@ -18,39 +17,33 @@
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('genetic_algorithm.static', filename='genetic.css') }}"
+      href="{{ url_for('genetic_algorithmPRO.static', filename='style.css') }}"
       type="text/css"
     />
-
-    <title>WebCam Algos genetic</title>
   </head>
   <body>
-    <h1>Генетический алгоритм!</h1>
+    <h1>Генетический алгоритм PRO</h1>
 
     <button
       type="button"
-      onclick="location.href='/main_page/'"
+      onclick="location.href='/genetic_algorithm/genetic'"
       id="back_to_main"
     >
       <img
         src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
-        alt="в главное меню"
+        alt="в базовый генетический"
         width="60px"
         height="60px"
       />
     </button>
-    <button id="geneticButton" style="width: 260px; height: 80px">
-      Запустить алгоритм
-    </button>
-    <canvas id="canvas" width="650" height="650"></canvas>
 
-    <button
-      type="button"
-      onclick="location.href='/genetic_algorithmPRO/geneticPRO'"
-    >
-      Генетический алгоритм ПРО
-    </button>
+    <input type="number" id="genetic_number" value="10" min="1" max="1000" />
+    <button id="start">Запустить</button>
+    <button id="clear">Очистить</button>
+    <div id="output"></div>
+    <div id="answer"></div>
+    <div id="description">Идет поиск решения...</div>
 
-    <script src="{{ url_for('genetic_algorithm.static', filename='geneticCode.js') }}"></script>
+    <script src="{{ url_for('genetic_algorithmPRO.static', filename='script.js') }}"></script>
   </body>
 </html>
