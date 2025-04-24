@@ -6,8 +6,6 @@ function setWhiteBackground() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-// ctx.lineWidth = 10;
-
 const lineWidthInput = document.getElementById("lineWidth");
 const showLineWidth = document.getElementById("showLineWidth");
 ctx.lineWidth = parseInt(lineWidthInput.value);
@@ -17,7 +15,12 @@ lineWidthInput.addEventListener("input", function () {
 });
 
 ctx.lineCap = "round";
-ctx.strokeStyle = "#000000";
+
+const colorInput = document.getElementById("color");
+ctx.strokeStyle = colorInput.value;
+colorInput.addEventListener("input", function () {
+  ctx.strokeStyle = colorInput.value;
+});
 
 const resultElement = document.getElementById("result");
 const probabilitiesElement = document.getElementById("probabilities");
@@ -159,9 +162,14 @@ function preprocessImage(canvas) {
   const pixels = imageData.data;
 
   const grayscale = [];
+
   for (let i = 0; i < pixels.length; i += 4) {
-    const avg = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-    grayscale.push(1 - avg / 255);
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+
+    const isWhite = r === 255 && g === 255 && b === 255;
+    grayscale.push(isWhite ? 0 : 1);
   }
 
   let matrix = [];

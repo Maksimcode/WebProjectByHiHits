@@ -22,7 +22,8 @@ canvas {
   justify-content: space-between;
 }
 
-.range-container {
+.range-container,
+.color-container {
   display: flex;
   align-items: center;
   gap: 10px;
