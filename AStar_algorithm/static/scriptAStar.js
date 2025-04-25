@@ -11,7 +11,7 @@ function createGrid() {
 
   grid = [];
 
-  const cellSize = 600 / gridSize;
+  const cellSize = 500 / gridSize;
 
   container.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
   container.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
