@@ -9,19 +9,21 @@ body {
   display: flex;
   width: 100%;
   top: 13%;
-  left: 4%;
   gap: 10%;
 }
 
 .right-container {
   width: 62%;
   position: absolute;
-  top: 13%;
+  padding-top: 5%;
   right: 6%;
 }
 
 .left-container {
   width: 38%;
+  position: absolute;
+  top: 5%;
+  left: 4%;
 }
 
 input[type="range"] {
