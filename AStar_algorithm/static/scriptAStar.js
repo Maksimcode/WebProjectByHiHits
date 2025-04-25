@@ -59,7 +59,7 @@ function generateMazeDFS() {
       [2, 0],
       [0, -2],
       [-2, 0],
-    ]; // Right, Down, Left, Up
+    ];
     for (let [dr, dc] of directions) {
       const newRow = row + dr;
       const newCol = col + dc;
@@ -100,7 +100,6 @@ function generateMazeDFS() {
   carveMaze(startRow - (startRow % 2), startCol - (startCol % 2));
 }
 
-// Clear obstacles, path, and start/end points
 function refreshGrid() {
   for (let row = 0; row < gridSize; row++) {
     for (let col = 0; col < gridSize; col++) {
@@ -132,16 +131,13 @@ function generatePath() {
   const closedSet = [];
   let pathFound = false;
 
-  // Добавляем начальную точку в openSet
   openSet.push(startCell);
 
-  // Счетчик для задержки анимации
   let animationDelay = animationSpeed;
 
   while (openSet.length > 0) {
     let winner = 0;
 
-    // Находим клетку с наименьшим значением f
     for (let i = 0; i < openSet.length; i++) {
       if (openSet[i].f < openSet[winner].f) {
         winner = i;
@@ -150,29 +146,24 @@ function generatePath() {
 
     const current = openSet[winner];
 
-    // Если текущая клетка - это целевая клетка, путь найден
     if (current === goalCell) {
       pathFound = true;
       break;
     }
 
-    // Удаляем текущую клетку из openSet и добавляем в closedSet
     openSet.splice(winner, 1);
     closedSet.push(current);
 
-    // Анимация для клеток в closedSet
     setTimeout(() => {
-      current.classList.remove("open"); // Убираем класс "open", если он был
+      current.classList.remove("open");
       current.classList.add("closed");
     }, animationDelay);
 
-    // Получаем соседей текущей клетки
     const neighbors = getNeighbors(current);
 
     for (let i = 0; i < neighbors.length; i++) {
       const neighbor = neighbors[i];
 
-      // Проверяем, что соседняя клетка не в closedSet и не является препятствием
       if (
         !closedSet.includes(neighbor) &&
         !neighbor.classList.contains("obstacle")
@@ -187,24 +178,20 @@ function generatePath() {
           neighbor.g = tempG;
           openSet.push(neighbor);
 
-          // Анимация для клеток в openSet
           setTimeout(() => {
             neighbor.classList.add("open");
           }, animationDelay);
         }
 
-        // Вычисляем значения h и f для соседней клетки
         neighbor.h = heuristic(neighbor, goalCell);
         neighbor.f = neighbor.g + neighbor.h;
         neighbor.previous = current;
       }
     }
 
-    // Увеличиваем задержку для следующей анимации
     animationDelay += animationSpeed;
   }
 
-  // Если путь найден, строим его
   if (pathFound) {
     let path = [];
     let temp = goalCell;
@@ -215,10 +202,9 @@ function generatePath() {
       temp = temp.previous;
     }
 
-    // Анимация построения итогового пути
     for (let i = path.length - 1; i >= 0; i--) {
       setTimeout(() => {
-        path[i].classList.remove("open", "closed"); // Убираем предыдущие классы
+        path[i].classList.remove("open", "closed");
         path[i].classList.add("path");
       }, animationDelay + animationSpeed * (path.length - i));
     }
@@ -229,7 +215,6 @@ function generatePath() {
   isPathGenerated = true;
 }
 
-// Helper function to calculate heuristic value (Manhattan distance)
 function heuristic(a, b) {
   const distance =
     Math.abs(a.dataset.row - b.dataset.row) +
@@ -237,7 +222,6 @@ function heuristic(a, b) {
   return distance;
 }
 
-// Helper function to get neighbors of a cell
 function getNeighbors(cell) {
   const row = parseInt(cell.dataset.row);
   const col = parseInt(cell.dataset.col);
@@ -283,10 +267,6 @@ function handleCellClick(event) {
   }
 }
 
-// document.getElementById("generateGrid").addEventListener("click", function () {
-//   if (grid.length != 0) refreshGrid();
-//   createGrid();
-// });
 document
   .getElementById("randomizeObstacles")
   .addEventListener("click", randomizeObstacles);
@@ -326,23 +306,44 @@ timeoutInput.addEventListener("input", function () {
   showTimeout.textContent = animationSpeed;
 });
 
-const constructionMode = document.getElementById("selectionConstruct");
-constructionMode.addEventListener("change", function () {
-  if (constructionMode.value == document.getElementById("drawObstacles").text) {
-    isDrawingObstacles = true;
-    isSelectingStart = false;
-    isSelectingEnd = false;
-  } else if (
-    constructionMode.value == document.getElementById("selectStart").text
-  ) {
-    isSelectingStart = true;
-    isDrawingObstacles = false;
-    isSelectingEnd = false;
-  } else {
-    isSelectingEnd = true;
-    isSelectingStart = false;
-    isDrawingObstacles = false;
-  }
+// const constructionMode = document.getElementById("selectionConstruct");
+// constructionMode.addEventListener("change", function () {
+//   if (constructionMode.value == document.getElementById("drawObstacles").text) {
+//     isDrawingObstacles = true;
+//     isSelectingStart = false;
+//     isSelectingEnd = false;
+//   } else if (
+//     constructionMode.value == document.getElementById("selectStart").text
+//   ) {
+//     isSelectingStart = true;
+//     isDrawingObstacles = false;
+//     isSelectingEnd = false;
+//   } else {
+//     isSelectingEnd = true;
+//     isSelectingStart = false;
+//     isDrawingObstacles = false;
+//   }
+// });
+
+const selectStart = document.getElementById("selectStart");
+selectStart.addEventListener("click", function () {
+  isSelectingStart = true;
+  isDrawingObstacles = false;
+  isSelectingEnd = false;
+});
+
+const selectEnd = document.getElementById("selectEnd");
+selectEnd.addEventListener("click", function () {
+  isSelectingEnd = true;
+  isSelectingStart = false;
+  isDrawingObstacles = false;
+});
+
+const drawObstacles = document.getElementById("drawObstacles");
+drawObstacles.addEventListener("click", function () {
+  isDrawingObstacles = true;
+  isSelectingStart = false;
+  isSelectingEnd = false;
 });
 
 createGrid();
