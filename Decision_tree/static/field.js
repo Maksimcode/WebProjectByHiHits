@@ -1,4 +1,3 @@
-// Зумирование элемента с id "root"
 const rootElement = document.getElementById("root");
 
 rootElement.addEventListener("wheel", (event) => {
@@ -12,7 +11,6 @@ rootElement.addEventListener("wheel", (event) => {
   }
 });
 
-// Реализация перетаскивания (панорамирования) для элемента с id "tree"
 const treeElement = document.getElementById("tree");
 let isDragging = false;
 let dragStart = { left: 0, top: 0, x: 0, y: 0 };
