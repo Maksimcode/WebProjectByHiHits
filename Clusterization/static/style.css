@@ -1,25 +1,68 @@
-canvas 
-{   
-    position: absolute;
-    cursor: crosshair; 
-    background-color: white;  
-    border: 5px solid blueviolet;
-    top: 65px;
-    right: 50px;
+body {
+  background: linear-gradient(0deg, #0c101c 0%, #224748 113.82%);
+  display: flex;
+  min-height: 100vh;
 }
 
-input
-{
-    text-align: center;
-    font-size: 16px;
-    padding: 15px 30px;
-    border: 2px solid blueviolet;
-    position: relative;
-    top: 7px;
-    margin-left: 20px;
+.name {
+  position: absolute;
+  top: 10%;
+  left: 4%;
 }
 
-p
-{
-    margin-left: 20px;
+.main-container {
+  position: absolute;
+  display: flex;
+  top: 15%;
+  width: 100%;
+  gap: 10px;
+}
+
+.instructions {
+  position: absolute;
+  left: 4%;
+  width: 40%;
+  margin-top: 8%;
+}
+
+.canvas-container {
+  position: absolute;
+  right: 4%;
+  width: 60%;
+  margin-top: 2%;
+}
+
+canvas {
+  position: absolute;
+  cursor: crosshair;
+  background-color: white;
+  /* border: 5px solid; */
+  top: 65px;
+  right: 50px;
+}
+
+input {
+  text-align: center;
+  font-size: 16px;
+  padding: 15px 30px;
+  /* border: 2px solid blueviolet; */
+  position: relative;
+  top: 7px;
+  margin-left: 20px;
+}
+
+input[type="number"] {
+  width: 60%;
+}
+
+#clusterButton {
+  height: 56px;
+  border-radius: 40px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+
+p {
+  margin-left: 20px;
 }
