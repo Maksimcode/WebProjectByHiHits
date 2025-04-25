@@ -18,6 +18,18 @@ let centersLines = [];
 let clustersLines = [];
 //let colorLines = ['red','green','blue','yellow','purple','orange', 'pink','brown','grey'];
 
+function clearCanvas() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    points = [];
+    clusters = [];
+    clustersHierarchy = [];
+    clustersLines = [];
+}
+
+// Добавляем обработчик события для кнопки
+document.getElementById('clearButton').addEventListener('click', clearCanvas);
+
 canvas.addEventListener("click",  function(mouseEvent) // ставит точки на экране
 {
     if(flagPoints === true)

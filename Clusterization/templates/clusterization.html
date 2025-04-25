@@ -42,7 +42,8 @@
     <input type = "number" name = "name" placeholder = "Введите число" id = "numberClust" min="1" max="8"></input><br>
     <p>Расставьте точки на плоскости</p>
     <p>Запустите алгоритм</p>
-    <button id="clusterButton" style="width: 260px; height: 80px;">Запустить кластеризацию</button>
+    <button id="clusterButton" style="width: 260px; height: 80px;">Запустить кластеризацию</button><br>
+    <button id="clearButton" style="width: 260px; height: 80px;">Очистить поле</button>
     <canvas id = "canvas" width = "650" height = "650"></canvas>
     <script src="{{ url_for('clusterization.static', filename='app.js') }}"></script>
   </body>
