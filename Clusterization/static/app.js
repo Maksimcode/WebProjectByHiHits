@@ -6,17 +6,28 @@ let flagPoints = true;
 let flagCenters = true;
 
 //базовая кластеризация
-let centers = [];
+let centersColors = [];
 let clusters = [];
-let collorCenter = ['red','green','blue','yellow','purple','orange', 'pink','brown','grey','white'];
+let collorCenter = ['red','green','blue','yellow','purple','orange', 'pink','brown','grey'];
 
 let clustersHierarchy = [];
-let centroids = [];
+let centersBlack = [];
 let blackColoring  = [[0, 0], [0, 180], [180, 0], [90,270], [270, 90], [45, 225], [225, 45], [135, 315], [315, 135]];
 
 let centersLines = [];
 let clustersLines = [];
 //let colorLines = ['red','green','blue','yellow','purple','orange', 'pink','brown','grey'];
+
+document.getElementById('clearButton').addEventListener('click', function() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    points = [];
+    clusters = [];
+    clustersHierarchy = [];
+    clustersLines = [];
+
+    flagPoints = true;
+});
 
 canvas.addEventListener("click",  function(mouseEvent) // ставит точки на экране
 {
@@ -44,30 +55,37 @@ canvas.addEventListener("click",  function(mouseEvent) // ставит точк�
 });
 
 document.getElementById("clusterButton").addEventListener("click", function() {
-    const numberClust = parseInt(document.getElementById("numberClust").value);
-    if (points.length === 0) {
-        alert("Сначала добавьте точки на поле!");
+    if (flagPoints === true) {
+        const numberClust = parseInt(document.getElementById("numberClust").value);
+        if (points.length === 0) {
+            alert("Сначала добавьте точки на поле!");
+            return;
+        }
+        if (points.length <= numberClust)  {
+            alert("Количество кластеров должно быть меньше, чем количество точек!");
+            return;
+        }
+        initializeCenters(numberClust); // количество кластеров
+        Clustering(numberClust);
+        flagPoints = false;
+    }
+    else {
+        alert("Очистите поле!");
         return;
     }
-    if (points.length < numberClust)  {
-        alert("Количество кластеров больше, чем количество точек!");
-        return;
-    }
-    initializeCenters(numberClust); // количество кластеров
-    Clustering(numberClust);
 });
 
 function initializeCenters(numberClust) {
-    centers = [];
-    centroids = [];
+    centersColors = [];
+    centersBlack = [];
     centersLines = [];
     for (let i = 0; i < numberClust; i++) {
         let randomIndex1 = Math.floor(Math.random() * points.length);
-        centers.push(points[randomIndex1]);
+        centersColors.push(points[randomIndex1]);
     }
     for (let i = 0; i < numberClust; i++) {
         let randomIndex2 = Math.floor(Math.random() * points.length);
-        centroids.push(points[randomIndex2]);
+        centersBlack.push(points[randomIndex2]);
     }
     for (let i = 0; i < numberClust; i++) {
         let randomIndex3 = Math.floor(Math.random() * points.length);
@@ -76,39 +94,73 @@ function initializeCenters(numberClust) {
 }
 
 function Clustering(numberClust) {
-    clusters = Array.from({ length: numberClust }, () => []);
-    clustersHierarchy = Array.from({ length: numberClust }, () => []);
-    clustersLines = Array.from({ length: numberClust }, () => []);
-    //кластеризация тут
-    for (let i = 0; i < points.length; i++) {
-        let distances1 = centers.map(center => getDistance(points[i], center));
-        let distances2 = centroids.map(center => getDistance(points[i], center));
-        let distances3 = centersLines.map(center => getDistance(points[i], center));
-        let minIndex1 = distances1.indexOf(Math.min(...distances1));
-        let minIndex2 = distances2.indexOf(Math.min(...distances2));
-        let minIndex3 = distances3.indexOf(Math.min(...distances3));
-        clusters[minIndex1].push(points[i]);
-        clustersHierarchy[minIndex2].push(points[i]);
-        clustersLines[minIndex3].push(points[i]);
-    }
-    //тут обновление цветов пошло
-    for (let j = 0; j < centers.length-numberClust; j++) {
-        if (clusters[j].length > 0) {
-            centers[j] = getNewCenter(clusters[j]);
+    let maxIterations = 2000; 
+    let convergedColors = false;
+    let convergedBlack = false;
+    let convergedLines = false;
+    let iteration = 0;
+
+    while (!convergedColors && !convergedBlack && !convergedLines && iteration < maxIterations) {
+        clusters = Array.from({ length: numberClust }, () => []);
+        clustersHierarchy = Array.from({ length: numberClust }, () => []);
+        clustersLines = Array.from({ length: numberClust }, () => []);
+
+        for (let i = 0; i < points.length; i++) {
+            //расстояние от точек до всех кластеров!
+            let distancesColors = centersColors.map(center => getDistance(points[i], center));
+            let distancesBlack = centersBlack.map(center => getDistance(points[i], center));
+            let distancesLines = centersLines.map(center => getDistance(points[i], center));
+
+            let minIndexColors = distancesColors.indexOf(Math.min(...distancesColors));
+            let minIndexBlack = distancesBlack.indexOf(Math.min(...distancesBlack));
+            let minIndexLines = distancesLines.indexOf(Math.min(...distancesLines));
+
+            clusters[minIndexColors].push(points[i]);
+            clustersHierarchy[minIndexBlack].push(points[i]);
+            clustersLines[minIndexLines].push(points[i]);
         }
+
+        let newCentersColors = centersColors.map((center, index) => {
+            if (clusters[index].length > 0) {
+                return getNewCenter(clusters[index]);
+            }
+            return center;
+        });
+
+        let newCentersBlack = centersBlack.map((center, index) => {
+            if (clustersHierarchy[index].length > 0) {
+                return getNewCenter(clustersHierarchy[index]);
+            }
+            return center;
+        });
+
+        let newCentersLines = centersLines.map((center, index) => {
+            if (clustersLines[index].length > 0) {
+                return getNewCenter(clustersLines[index]);
+            }
+            return center;
+        });
+
+        // проверка сходимости центров кластеров!!!
+        convergedColors = centersColors.every((center, index) => {
+            return getDistance(center, newCentersColors[index]) < 1e-6; 
+        });
+
+        convergedBlack = centersBlack.every((center, index) => {
+            return getDistance(center, newCentersBlack[index]) < 1e-6; 
+        });
+
+        convergedLines = centersLines.every((center, index) => {
+            return getDistance(center, newCentersLines[index]) < 1e-6; 
+        });
+
+        centersColors = newCentersColors;
+        centersBlack = newCentersBlack;
+        centersLines = newCentersLines;
+
+        iteration++;
     }
 
-    for (let j = 0; j < centroids.length-numberClust; j++) {
-        if (clustersHierarchy[j].length > 0) {
-            centroids[j] = getNewCenter(clustersHierarchy[j]);
-        }
-    }
-
-    for (let j = 0; j < centersLines.length-numberClust; j++) {
-        if (clustersLines[j].length > 0) {
-            centersLines[j] = getNewCenter(clustersLines[j]);
-        }
-    }
     drawClusters();
     drawHierarchy();
     drawLines();
@@ -127,8 +179,7 @@ function getNewCenter(cluster) {
     };
 }
 
-function getRadians(degrees) 
-{
+function getRadians(degrees) {
   return (Math.PI / 180) * degrees;
 }
 
@@ -154,13 +205,6 @@ function drawClusters() {
             context.arc(clusters[i][j].pointX, clusters[i][j].pointY, 10, 0, 2 * Math.PI);
             context.fill();
         }
-    }
-    // тут рисуем центры кластеров
-    for (let i = 0; i < centers.length; i++) {
-        context.fillStyle = collorCenter[i];
-        context.beginPath();
-        context.arc(centers[i].pointX, centers[i].pointY, 10, 0, 2 * Math.PI);
-        context.fill();
     }
 }
 
