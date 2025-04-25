@@ -1,39 +1,33 @@
 body {
+  background: linear-gradient(313deg, #0c101c 31.27%, #482a22 109.76%);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-h1 {
-  width: 100%;
-  margin-top: 20px;
+  min-height: 100vh;
 }
 
 .main-container {
+  position: absolute;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   width: 100%;
-  margin-top: 20px;
-}
-
-.left-container {
-  width: 35%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-left: 100px;
+  top: 13%;
+  gap: 10%;
 }
 
 .right-container {
-  width: 65%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 62%;
+  position: absolute;
+  padding-top: 5%;
+  right: 6%;
+}
+
+.left-container {
+  width: 38%;
+  position: absolute;
+  top: 5%;
+  left: 4%;
+}
+
+input[type="range"] {
+  flex-grow: 1;
 }
 
 .range-container,
@@ -44,34 +38,43 @@ h1 {
   width: 100%;
 }
 
-p {
-  font-size: 20px;
-  margin: 0;
-  /* white-space: nowrap; */
-}
-
-input[type="range"] {
-  flex-grow: 1;
-}
-
-select {
-  flex-grow: 1;
-  height: 40px;
-}
-
-.button-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
 .button-container button {
-  font-size: 20px;
-  height: 50px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0px;
+  height: 56px;
+  border-radius: 40px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 3.5%;
+  width: 70%;
+  margin-bottom: 2%;
+}
+
+.button-container button :hover {
+  background-color: rgba(51, 51, 51, 0.5);
+}
+
+#selectStart {
+  width: 20%;
+}
+#selectEnd {
+  width: 30%;
+}
+#drawObstacles {
+  width: 50%;
+}
+#randomizeObstacles {
+  width: 70%;
+}
+#refreshGrid {
+  width: 30%;
+}
+#generatePath {
+  width: 70%;
 }
 
 #gridContainer {
@@ -79,8 +82,8 @@ select {
   gap: 1px;
   margin: 0 auto;
   margin-bottom: 50px;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
 }
 
 .cell {
@@ -107,7 +110,7 @@ select {
 }
 
 .path {
-  background-color: tomato;
+  background-color: #482a22;
 }
 
 .closed {
@@ -115,5 +118,5 @@ select {
 }
 
 .open {
-  background-color: lightsalmon;
+  background-color: rgb(255, 131, 42);
 }

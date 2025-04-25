@@ -25,51 +25,127 @@
     <title>WebCam Algos A*</title>
   </head>
   <body>
-    <h1>Алгоритм А*!</h1>
+    <div class="head">
+      <div class="logo">
+        <button
+          id="back_to_main"
+          type="button"
+          onclick="location.href='/main_page/'"
+        >
+          <img
+            src="{{ url_for('main_page.static', filename='icons/logo.png') }}"
+            alt="logo"
+            width="357px"
+            height="90px"
+          />
+        </button>
+      </div>
 
-    <button
-      type="button"
-      onclick="location.href='/main_page/'"
-      id="back_to_main"
-    >
-      <img
-        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
-        alt="в главное меню"
-        width="60px"
-        height="60px"
-      />
-    </button>
+      <div class="rectangle">
+        <div class="icons-container">
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/astar_algorithm/astar'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/astar.png') }}"
+              alt="A*"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/clusterization/clusterization'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/clusterization.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/genetic_algorithm/genetic'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/genetic.png') }}"
+              alt="genetic"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/ant_algorithm/ant'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/ant.png') }}"
+              alt="ant"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/decision_tree/tree'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/tree.png') }}"
+              alt="tree"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/neural_network/neuro'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/neuro.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
 
     <div class="main-container">
       <div class="left-container">
+        <div class="name"><h2>Алгоритм А*!</h2></div>
         <div class="range-container">
-          <p>Current size:</p>
+          <p>Размер поля:</p>
           <input type="range" min="4" max="40" id="gridSize" />
           <p id="showSize">22</p>
         </div>
 
         <div class="range-container">
-          <p>Set animation speed:</p>
+          <p>Скорость анимации:</p>
           <input type="range" min="0" max="100" id="timeout" />
           <p id="showTimeout">50</p>
         </div>
 
-        <!-- <div class="selection-container">
-          <p>Select construction mode:</p>
-          <select id="selectionConstruct">
-            <option id="drawObstacles">Draw obstacles</option>
-            <option id="selectStart">Start point</option>
-            <option id="selectEnd">End point</option>
-          </select>
-        </div> -->
-
+        <h3>Выберите инструмент:</h3>
         <div class="button-container">
-          <button id="selectStart">Start</button>
-          <button id="selectEnd">End</button>
-          <button id="drawObstacles">Draw obstacles</button>
-          <button id="randomizeObstacles">Randomize Obstacles</button>
-          <button id="refreshGrid">Refresh Grid</button>
-          <button id="generatePath">Generate Path</button>
+          <div class="button-row">
+            <button id="selectStart">Старт</button>
+            <button id="selectEnd">Финиш</button>
+            <button id="drawObstacles">Препятствия</button>
+          </div>
+          <div class="button-row">
+            <button id="randomizeObstacles">Рандомные препятствия</button>
+            <button id="refreshGrid">Очистить</button>
+          </div>
+          <button id="generatePath">Запустить</button>
         </div>
       </div>
 
@@ -77,6 +153,7 @@
         <div id="gridContainer"></div>
       </div>
     </div>
+
+    <script src="{{ url_for('AStar_algorithm.static', filename='scriptAStar.js') }}"></script>
   </body>
-  <script src="{{ url_for('AStar_algorithm.static', filename='scriptAStar.js') }}"></script>
 </html>

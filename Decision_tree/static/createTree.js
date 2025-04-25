@@ -10,7 +10,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
    }
  }
  
- // Функция сортировки значений столбца по частоте (от наибольшего к наименьшему)
  function sortBranches(column) {
    const results = getUniqueElements(column);
    const counts = new Array(results.length).fill(0);
@@ -23,7 +22,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
    return pairs.map((p) => p.val);
  }
  
- // Функция вычисления наиболее вероятного ответа (использует последний столбец как целевой)
  function getAnswer(currentData) {
    if (!currentData || currentData.length <= 1) return "Unknown";
  
@@ -48,7 +46,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
    return uniqueAnswers[maxIndex];
  }
  
- // Создание листового узла (на основе последнего столбца – целевого)
  function createLeafNode(currentData) {
    const answer = getAnswer(currentData);
    const targetColumnName = currentData[0][currentData[0].length - 1];
@@ -62,7 +59,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
    const targetColIndex = currentData[0].length - 1;
    
 
-   // Если остался ровно один признак для разбиения, форсируем его использование
    if (remainingAttributes.length === 1) {
      const forcedAttr = remainingAttributes[0];
      node.attribute = forcedAttr;
@@ -74,7 +70,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
      const uniqueValues = sortBranches(col);
      
      uniqueValues.forEach((value) => {
-       // Фильтрация данных согласно значению выбранного признака
        const filteredData = [currentData[0]];
        for (let i = 1; i < currentData.length; i++) {
          if (currentData[i][forcedAttr.index] === value) {
@@ -88,7 +83,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
          childNode.nodeName = `${currentData[0][targetColIndex]} = Unknown`;
          childNode.attribute = null;
        } else {
-         // Так как это последний признак для разбиения, прикрепляем лист с итоговым ответом
          childNode.branches.push(createLeafNode(filteredData));
        }
        node.branches.push(childNode);
@@ -96,7 +90,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
      return;
    }
  
-   // Если больше одного признака осталось, выбираем лучший по критерию Джини
    let bestAttributes = getTreeNodes(currentData);
    let availableAttributes = bestAttributes.filter(attr =>
      remainingAttributes.some(rAttr => rAttr.index === attr.index)
@@ -116,8 +109,6 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
    const attrIndex = bestAttr.index;
    const column = getColumn(currentData, attrIndex, 1);
    const uniqueValues = sortBranches(column);
- 
-   // Обновляем оставшиеся признаки: исключаем использованный
    const newRemainingAttributes = remainingAttributes.filter(attr => attr.index !== bestAttr.index);
  
    uniqueValues.forEach((value) => {
@@ -134,27 +125,22 @@ import { getTreeNodes, getColumn, getUniqueElements, data } from "./gini.js";
        childNode.nodeName = `${currentData[0][targetColIndex]} = Unknown`;
        childNode.attribute = null;
      } else {
-       // Рекурсивно строим дерево для отфильтрованных данных
        growTree(childNode, filteredData, newRemainingAttributes);
      }
  
      node.branches.push(childNode);
    });
- 
-   // Если по какой-то причине не создались ветви, превращаем текущий узел в лист
    if (node.branches.length === 0) {
      node.nodeName = `${currentData[0][targetColIndex]} = ${getAnswer(currentData)}`;
      node.attribute = null;
    }
  }
  
- // Основная функция построения дерева решений
  export function makeTree(inputData) {
    if (!inputData || inputData.length <= 1) {
      return new Node("No data", null, null);
    }
  
-   // Формируем список атрибутов, исключая последний столбец – целевой признак
    const allAttributes = [];
    for (let i = 0; i < inputData[0].length - 1; i++) {
      allAttributes.push({ name: inputData[0][i], index: i });
