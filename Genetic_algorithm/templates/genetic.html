@@ -25,34 +25,117 @@
     <title>WebCam Algos genetic</title>
   </head>
   <body>
-    <h1>Генетический алгоритм!</h1>
+    <div class="head">
+      <div class="logo">
+        <button
+          id="back_to_main"
+          type="button"
+          onclick="location.href='/main_page/'"
+        >
+          <img
+            src="{{ url_for('main_page.static', filename='icons/logo.png') }}"
+            alt="logo"
+            width="357px"
+            height="90px"
+          />
+        </button>
+      </div>
 
-    <button
-      type="button"
-      onclick="location.href='/main_page/'"
-      id="back_to_main"
-    >
-      <img
-        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
-        alt="в главное меню"
-        width="60px"
-        height="60px"
-      />
-    </button>
-    <button id="geneticButton" style="width: 260px; height: 80px">
-      Запустить алгоритм
-    </button>
-    <button id="clearButton" style="width: 260px; height: 80px;">
-      Очистить поле
-    </button>
-    <canvas id="canvas" width="650" height="650"></canvas>
-    <br>
-    <button
-      type="button"
-      onclick="location.href='/genetic_algorithmPRO/geneticPRO'"
-    >
-      Генетический алгоритм ПРО
-    </button>
+      <div class="rectangle">
+        <div class="icons-container">
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/astar_algorithm/astar'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/astar.png') }}"
+              alt="A*"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/clusterization/clusterization'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/clusterization.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/genetic_algorithm/genetic'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/genetic.png') }}"
+              alt="genetic"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/ant_algorithm/ant'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/ant.png') }}"
+              alt="ant"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/decision_tree/tree'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/tree.png') }}"
+              alt="tree"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/neural_network/neuro'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/neuro.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="name"><h2>Генетический алгоритм!</h2></div>
+
+    <div class="main-container">
+      <div class="button-container">
+        <button id="geneticButton">Запустить алгоритм</button>
+        <button
+          type="button"
+          onclick="location.href='/genetic_algorithmPRO/geneticPRO'"
+        >
+          Генетический алгоритм ПРО
+        </button>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="canvas" width="500" height="500"></canvas>
+      </div>
+    </div>
 
     <script src="{{ url_for('genetic_algorithm.static', filename='geneticCode.js') }}"></script>
   </body>

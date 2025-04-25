@@ -1,9 +1,44 @@
-canvas 
-{   
-    position: absolute;
-    cursor: crosshair; 
-    background-color: white;  
-    border: 5px solid blueviolet;
-    top: 65px;
-    right: 50px;
+body {
+  background: linear-gradient(90deg, #0c101c 0.04%, #452248 124.54%);
+  display: flex;
+  min-height: 100vh;
+}
+
+.name {
+  position: absolute;
+  top: 10%;
+  left: 4%;
+}
+
+.main-container {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  top: 20%;
+  gap: 10%;
+}
+
+.button-container {
+  position: absolute;
+  width: 30%;
+  left: 4%;
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-container button {
+  height: 56px;
+  border-radius: 40px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+
+canvas {
+  position: absolute;
+  cursor: crosshair;
+  background-color: white;
+  top: 10%;
+  right: 4%;
 }
