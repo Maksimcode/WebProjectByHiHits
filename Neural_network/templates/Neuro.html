@@ -25,44 +25,130 @@
     <title>WebCam Algos Neuro</title>
   </head>
   <body>
-    <h1>Нейронная сеть!&#128565;</h1>
+    <div class="head">
+      <div class="logo">
+        <button
+          id="back_to_main"
+          type="button"
+          onclick="location.href='/main_page/'"
+        >
+          <img
+            src="{{ url_for('main_page.static', filename='icons/logo.png') }}"
+            alt="logo"
+            width="357px"
+            height="90px"
+          />
+        </button>
+      </div>
 
-    <button
-      type="button"
-      onclick="location.href='/main_page/'"
-      id="back_to_main"
-    >
-      <img
-        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
-        alt="в главное меню"
-        width="60px"
-        height="60px"
-      />
-    </button>
-
-    <h2>Нарисуйте цифру:</h2>
-    <div class="range-container">
-      <p>Current line width:</p>
-      <input type="range" min="10" max="30" value="10" id="lineWidth" />
-      <p id="showLineWidth">22</p>
+      <div class="rectangle">
+        <div class="icons-container">
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/astar_algorithm/astar'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/astar.png') }}"
+              alt="A*"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/clusterization/clusterization'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/clusterization.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/genetic_algorithm/genetic'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/genetic.png') }}"
+              alt="genetic"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/ant_algorithm/ant'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/ant.png') }}"
+              alt="ant"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/decision_tree/tree'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/tree.png') }}"
+              alt="tree"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/neural_network/neuro'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/neuro.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="color-container">
-      <p>Select color:</p>
-      <input type="color" value="#000000" id="color" />
-      <!-- <p id="showColor">22</p> -->
-    </div>
+    <div class="main-container">
+      <div class="instructions">
+        <div class="name">
+          <h2>Нейронная сеть!&#128565;</h2>
+        </div>
+        <h3>Нарисуйте цифру:</h3>
+        <div class="range-container">
+          <p>Толщина линии:</p>
+          <input type="range" min="10" max="30" value="22" id="lineWidth" />
+          <p id="showLineWidth">22</p>
+        </div>
 
-    <div class="canvas-container">
-      <canvas id="drawingCanvas" width="750" height="400"></canvas>
-    </div>
+        <div class="color-container">
+          <p>Цвет:</p>
+          <input type="color" value="#000000" id="color" />
+        </div>
+        <div class="button-container">
+          <button onclick="predictDigit()">Распознать</button>
+          <button onclick="clearCanvas()">Очистить</button>
+        </div>
+      </div>
 
-    <p id="result">Результат:</p>
-    <p id="probabilities">Вероятности:</p>
+      <div class="canvas-container">
+        <canvas id="drawingCanvas" width="500px" height="500px"></canvas>
+        <p id="result">Результат:</p>
+      </div>
 
-    <div class="button-container">
-      <button onclick="predictDigit()">Распознать</button>
-      <button onclick="clearCanvas()">Очистить</button>
+      <div class="prob-container">
+        <p id="probabilities">Вероятности:</p>
+      </div>
     </div>
   </body>
   <script src="{{ url_for('neural_network.static', filename='script.js') }}"></script>
