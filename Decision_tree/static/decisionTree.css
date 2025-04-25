@@ -1,36 +1,23 @@
 body {
-    background: linear-gradient(to right, orange, pink);
-    margin: 0;
+    background: linear-gradient(133deg, #0C101C 25.73%, #414822 110.74%);
+    overflow-x: hidden;
     font-family: Montserrat, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    min-width: 500px;
-  }
-  
-  #back_to_main {
-    position: absolute;
-    top: 0;
-    left: 10px;
-    height: 60px;
-    width: 60px;
-    background: transparent;
-    border: none;
-    transition: transform 0.2s ease-in-out;
   }
   
   .container {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
   
   .title {
+    color:white;
     width: 100%;
     text-align: center;
     font-weight: 900;
     font-size: 40px;
-    margin: 15px 10px 10px;
+    margin: -10px 10px 5px;
   }
   
   input {
@@ -61,26 +48,26 @@ body {
   #buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     width: 200px;
   }
   
-  button {
-    border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    border: 2px solid #ffffff;
-    cursor: pointer;
-    background: transparent;
-    font-size: 15px;
-    text-align: center;
-    color: #ffffff;
-    width: 200px;
-    height: 40px;
-    margin: 16px;
-    transition: opacity 0.2s ease-in-out;
+  #buttons button, 
+  .traversal-block button {
+      border-radius: 20px;
+      padding: 8px 16px;
+      border: 2px solid #ffffff;
+      cursor: pointer;
+      background: transparent;
+      font-size: 15px;
+      text-align: center;
+      color: #ffffff;
+      width: 200px;
+      height: 40px;
+      margin: 16px;
+      transition: opacity 0.2s ease-in-out;
   }
-  
+
   #userInput {
     width: 195px;
     height: 34px;
@@ -90,8 +77,8 @@ body {
   }
   
   #tree {
-    width: 600px;
-    height: 400px;
+    width: 800px;
+    height: 600px;
     border: 2px solid #ffffff;
     border-radius: 20px;
     overflow: hidden;
@@ -189,6 +176,10 @@ body {
     color: #333;
   }
   
+  p {
+    font-size: 16px;
+  }
+
   .visited-node {
     background-color: #ff6b6b;
   }
@@ -209,38 +200,31 @@ body {
   .right-panel {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 300px;
+    gap: 20px;
+    width: 260px;
   }
   
-  .traversal-block {
+  .traversal-block,
+  .prediction-container{
     border: 2px solid #ffffff;
-    padding: 10px;
+    padding: 5px;
+    color: white;
     border-radius: 10px;
-    margin-bottom: 15px;
   }
-  .traversal-block h4 {
-    margin-top: 0;
-  }
+  
   #userBypass {
     margin-top: 10px;
   }
   
-  .prediction-container {
-    border: 2px solid #ffffff;
-    padding: 10px;
-    border-radius: 10px;
-  }
-  .prediction-container h4 {
-    margin-top: 0;
-  }
+
   #result {
     margin-top: 10px;
     font-weight: bold;
   }
   
   .legend {
-    margin-top: 20px;
+    position: fixed;
+    bottom: 20px;
     padding: 10px;
     background-color: #ffffff;
     border-radius: 5px;
