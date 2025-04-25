@@ -22,26 +22,124 @@
     />
   </head>
   <body>
-    <h1>Генетический алгоритм PRO</h1>
+    <div class="head">
+      <div class="logo">
+        <button
+          id="back_to_main"
+          type="button"
+          onclick="location.href='/main_page/'"
+        >
+          <img
+            src="{{ url_for('main_page.static', filename='icons/logo.png') }}"
+            alt="logo"
+            width="357px"
+            height="90px"
+          />
+        </button>
+      </div>
 
-    <button
-      type="button"
-      onclick="location.href='/genetic_algorithm/genetic'"
-      id="back_to_main"
-    >
-      <img
-        src="{{ url_for('main_page.static', filename='Undo-Transparent-Background.png') }}"
-        alt="в базовый генетический"
-        width="60px"
-        height="60px"
-      />
-    </button>
+      <div class="rectangle">
+        <div class="icons-container">
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/astar_algorithm/astar'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/astar.png') }}"
+              alt="A*"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/clusterization/clusterization'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/clusterization.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/genetic_algorithm/genetic'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/genetic.png') }}"
+              alt="genetic"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/ant_algorithm/ant'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/ant.png') }}"
+              alt="ant"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/decision_tree/tree'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/tree.png') }}"
+              alt="tree"
+              width="59px"
+              height="59px"
+            />
+          </button>
+          <button
+            class="image-button"
+            type="button"
+            onclick="location.href='/neural_network/neuro'"
+          >
+            <img
+              src="{{ url_for('main_page.static', filename='icons/neuro.png') }}"
+              alt="clust"
+              width="59px"
+              height="59px"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <input type="number" id="genetic_number" value="10" min="1" max="1000" />
-    <button id="start">Запустить</button>
-    <button id="clear">Очистить</button>
-    <div id="output"></div>
-    <div id="answer"></div>
+    <div class="name"><h2>Генетический алгоритм PRO</h2></div>
+
+    <div class="main-container">
+      <div class="left-container">
+        <div class="inputN">
+          <p>Введите номер фисла фибоначчи:</p>
+
+          <input
+            type="number"
+            id="genetic_number"
+            value="8"
+            min="1"
+            max="1000"
+          />
+        </div>
+        <p id="answer"></p>
+        <div class="button-container">
+          <button id="start">Запустить</button>
+          <button id="clear">Очистить</button>
+        </div>
+      </div>
+      <div id="output"></div>
+    </div>
+
     <div id="description">Идет поиск решения...</div>
 
     <script src="{{ url_for('genetic_algorithmPRO.static', filename='script.js') }}"></script>
