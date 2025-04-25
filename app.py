@@ -10,7 +10,6 @@ from main_page import bp as main_bp
 from Genetic_algorithmPRO import bp as geneticPRO_bp
 from Neural_network.model import create_model
 
-
 app = Flask(__name__)
 
 app.register_blueprint(neural_bp, url_prefix = "/neural_network")
