@@ -26,7 +26,7 @@ function generateTwoRandomIndices(min, max) {
 }
 
 function mutateChromosome(chromosome) {
-    let mutatedChromosome = chromosome.slice();
+    let mutatedChromosome = chromosome.slice(); //создание новой версии маршрутика
     for (let i = 0; i < genes.length - 1; i++) {
         let index1 = generateRandomIndex(1, genes.length - 1);
         let index2 = generateRandomIndex(1, genes.length - 1);
