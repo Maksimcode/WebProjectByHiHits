@@ -1,7 +1,6 @@
 export let data = []; 
- const ERROR_CODE = -999;
+ const ERROR_CODE = -400;
  
- // Возврат массива с элементами столбца таблицы
  export function getColumn(matrix, columnIndex, start = 1) {
      if (!matrix || matrix.length <= start) {
          return [];
@@ -16,16 +15,13 @@ export let data = [];
      return column;
  }
  
- // Удаление повторяющихся элементов из массива
  export function getUniqueElements(arr) {
      if (!arr || arr.length === 0) {
          return [];
      }
      
-     // Массив уникальных элементов
      let uniqueArr = [];
  
-     // Добавление в массив уникальных элементов
      for (let i = 0; i < arr.length; i++) {
          if (!uniqueArr.includes(arr[i])) {
              uniqueArr.push(arr[i]);
@@ -35,7 +31,6 @@ export let data = [];
      return uniqueArr;
  }
  
- // Нахождение индекса Джини в колонке
  function calculateGiniIndex(column) {
      if (!column || column.length === 0) {
          return 0;
@@ -57,13 +52,12 @@ export let data = [];
      return impurity;
  }
  
- // Составление матрицы с колонкой, состоящей из уникальных элементов
  function getUniqueMatrix(columnIndex, columnValue) {
      if (!data || data.length <= 1) {
          return [];
      }
      
-     let uniqueMatrix = [data[0]]; // Всегда добавляем заголовок
+     let uniqueMatrix = [data[0]];
  
      for (let i = 1; i < data.length; i++) {
          if (data[i][columnIndex] === columnValue) {
@@ -74,58 +68,47 @@ export let data = [];
      return uniqueMatrix;
  }
  
- // Нахождение величины Gini Gain в колонке
  function calculateGiniGain(column, columnIndex) {
      if (!column || column.length === 0 || columnIndex === undefined) {
          return ERROR_CODE;
      }
      
-     const uniqueClasses = getUniqueElements(column); // Уникальные классы в колонке
+     const uniqueClasses = getUniqueElements(column);
      
-     // Если слишком мало данных для разбиения, пропускаем этот атрибут
      if (uniqueClasses.length <= 1) {
          return ERROR_CODE;
      }
  
-     // Если слишком много уникальных значений относительно размера данных,
-     // это может указывать на атрибут с низкой информативностью (например, ID)
      const minSamplesPerClass = 1;
      if (column.length / uniqueClasses.length < minSamplesPerClass) {
          return ERROR_CODE;
      }
  
-     // Общий индекс Джини для всего набора данных (целевой столбец)
      const targetColumn = getColumn(data, data[0].length - 1);
      const totalGini = calculateGiniIndex(targetColumn);
      
-     let weightedGiniSum = 0; // Взвешенная сумма индексов Джини для подмножеств
-     const totalRows = data.length - 1; // Общее количество строк без заголовка
+     let weightedGiniSum = 0;
+     const totalRows = data.length - 1; 
  
-     // Нахождение индекса Джини для каждого уникального класса колонки
      for (let i = 0; i < uniqueClasses.length; i++) {
          const uniqueMatrix = getUniqueMatrix(columnIndex, uniqueClasses[i]);
-         
-         // Проверяем, есть ли строки данных (кроме заголовка)
          if (uniqueMatrix.length > 1) {
-             const subsetSize = uniqueMatrix.length - 1; // -1 для учета заголовка
+             const subsetSize = uniqueMatrix.length - 1; 
              const probability = subsetSize / totalRows;
              const subsetColumn = getColumn(uniqueMatrix, uniqueMatrix[0].length - 1);
              
              if (subsetColumn.length > 0) {
                  const subsetGini = calculateGiniIndex(subsetColumn);
-                 // Суммирование взвешенных индексов Джини
                  weightedGiniSum += probability * subsetGini;
              }
          }
      }
- 
-     // Нахождение величины Gini Gain в колонке
+
      const giniGain = totalGini - weightedGiniSum;
      
      return giniGain;
  }
  
- // Нахождение всех атрибутов
  function getAttributes(giniGains) {
      if (!giniGains || giniGains.length === 0) {
          return [];
@@ -142,13 +125,11 @@ export let data = [];
      return attributes;
  }
  
- // Сортировка атрибутов по уменьшению их Gini Gain
  function sortAttributes(attributes, giniGains) {
      if (!attributes || attributes.length === 0 || !giniGains || giniGains.length === 0) {
          return;
      }
      
-     // Создаем пары [атрибут, giniGain] для правильной сортировки
      let pairs = [];
      for (let i = 0; i < attributes.length; i++) {
          pairs.push({
@@ -157,37 +138,30 @@ export let data = [];
          });
      }
      
-     // Сортируем по убыванию Gini Gain
      pairs.sort((a, b) => b.giniGain - a.giniGain);
      
-     // Возвращаем отсортированные атрибуты
      return pairs.map(pair => pair.attribute);
  }
  
- // Нахождение последовательности атрибутов для построения дерева
  export function getTreeNodes(input) {
      if (!input || input.length <= 1) {
          return [];
      }
      
-     data = input;               // Таблица с данными
-     var giniGains = [];         // Прирост Джини для атрибута
+     data = input;
+     var giniGains = [];
  
-     // Вычисление Gini Gain для каждого атрибута
      for (let i = 0; i < data[0].length - 1; i++) {
          const columnGain = calculateGiniGain(getColumn(data, i), i);
          giniGains.push(columnGain);
      }
  
-     // Нахождение всех атрибутов
      let attributes = getAttributes(giniGains);
      
-     // Если нет подходящих атрибутов, возвращаем пустой массив
      if (attributes.length === 0) {
          return [];
      }
  
-     // Сортировка атрибутов по уменьшению их Gini Gain
      attributes = sortAttributes(attributes, giniGains);
      
      return attributes;

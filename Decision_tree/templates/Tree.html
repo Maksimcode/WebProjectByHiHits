@@ -45,12 +45,9 @@
     </div>
     <div class="container">
       <label class="title">Дерево решений</label>
-      <div style="display: flex; gap: 20px; margin-top: 20px">
+      <div class="main-container">
         <!-- Левая группа кнопок -->
-        <div
-          id="buttons"
-          style="display: flex; flex-direction: column; gap: 10px; width: 200px"
-        >
+        <div id="buttons">
           <button>
             <label id="fileInputButton" for="fileInput">Загрузить файл</label>
           </button>
@@ -68,79 +65,39 @@
         </div>
 
         <!-- Центральная область для дерева -->
-        <div id="tree" style="flex-grow: 1; max-height: 500px; overflow: auto">
+        <div id="tree" class="tree-container">
           <ul id="root"></ul>
         </div>
 
         <!-- Правая группа элементов -->
-        <div
-          style="display: flex; flex-direction: column; gap: 10px; width: 300px"
-        >
+        <div class="right-panel">
           <!-- Блок для пользовательского ввода и обхода дерева -->
-          <div
-            style="
-              border: 1px solid #ddd;
-              padding: 10px;
-              border-radius: 5px;
-              margin-bottom: 15px;
-            "
-          >
-            <h4 style="margin-top: 0">Обход дерева с данными:</h4>
+          <div class="traversal-block">
+            <h4>Обход дерева с данными:</h4>
             <input type="text" id="userInput" placeholder="Введите данные" />
-            <button id="userBypass" style="margin-top: 10px">
-              Обойти дерево
-            </button>
+            <button id="userBypass">Обойти дерево</button>
           </div>
 
           <!-- Блок для предсказаний -->
-          <div
-            id="predictionContainer"
-            style="border: 1px solid #ddd; padding: 10px; border-radius: 5px"
-          >
-            <h4 style="margin-top: 0">Предсказание на новых данных:</h4>
-            <div id="result" style="margin-top: 10px; font-weight: bold"></div>
-
-            <!-- Контейнер для формы предсказания (будет заполнен динамически) -->
+          <div id="predictionContainer" class="prediction-container">
+            <h4>Предсказание на новых данных:</h4>
+            <div id="result"></div>
             <div id="inputFormContainer"></div>
           </div>
-
-          <!-- Блок для результатов -->
         </div>
       </div>
+
       <!-- Легенда -->
-      <div
-        style="
-          margin-top: 20px;
-          padding: 10px;
-          background-color: #f0f0f0;
-          border-radius: 5px;
-        "
-      >
-        <h4 style="margin-top: 0">Легенда:</h4>
-        <div style="display: flex; gap: 20px">
-          <div>
-            <span
-              style="
-                display: inline-block;
-                width: 15px;
-                height: 15px;
-                background-color: #ff6b6b;
-                margin-right: 5px;
-              "
-            ></span>
+      <div class="legend">
+        <h4>Легенда:</h4>
+        <div class="legend-items">
+          <div class="legend-item">
+            <span class="visited-node"></span>
             <span>Посещенный узел</span>
           </div>
-          <div>
-            <span
-              style="
-                display: inline-block;
-                width: 15px;
-                height: 15px;
-                background-color: #ffd166;
-                margin-right: 5px;
-              "
-            ></span>
-            <span>Альтернативный путь (для неизвестных значений)</span>
+          <div class="legend-item">
+            <span class="alternate-path"></span>
+            <span>Альтернативный путь </span>
           </div>
         </div>
       </div>
