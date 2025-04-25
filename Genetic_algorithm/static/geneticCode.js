@@ -26,7 +26,7 @@ function generateTwoRandomIndices(min, max) {
 }
 
 function mutateChromosome(chromosome) {
-    let mutatedChromosome = chromosome.slice(); //создание новой версии маршрутика
+    let mutatedChromosome = chromosome.slice(); //создание новой версии маршрутика (в целом slice это про дублирование)
     for (let i = 0; i < genes.length - 1; i++) {
         let index1 = generateRandomIndex(1, genes.length - 1);
         let index2 = generateRandomIndex(1, genes.length - 1);
@@ -171,6 +171,7 @@ function insertIntoPopulation(population, chromosome) {
     else {
         let inserted = false;
         for (let i = 0; i < population.length; i++) {
+            //тут условие мол если маршрут меньше одного из данных, он встаёт перед ним
             if (chromosome[chromosome.length - 1] < population[i][population[i].length - 1]) {
                 population.splice(i, 0, chromosome);
                 inserted = true;
@@ -202,7 +203,7 @@ function crossover(parentA, parentB) {
         let index2 = mutationIndices[1];
 
         [child[index1], child[index2]] = [child[index2], child[index1]];
-    } //мутация произошла.
+    } //мутация произошла. (а может и нет.)
 
     return child;
 }
@@ -257,7 +258,7 @@ document.getElementById("geneticButton").addEventListener("click", async functio
                 let parentA = population[parentIndex1].slice(0, population[parentIndex1].length - 1);
                 let parentB = population[parentIndex2].slice(0, population[parentIndex2].length - 1);
 
-                let offspring = performCrossover(parentA, parentB);
+                let offspring = performCrossover(parentA, parentB); //возвращает после скрещивания двух потомков!
 
                 population.push(offspring[0].slice());
                 population.push(offspring[1].slice());
@@ -276,6 +277,6 @@ document.getElementById("geneticButton").addEventListener("click", async functio
         }
     }
     else {
-        alert("Нажмите Очистить поле");
+        alert("Сначала очистите поле!");
     }
 });
