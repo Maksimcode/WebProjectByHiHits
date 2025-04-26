@@ -62,7 +62,6 @@ makeTreeButton.addEventListener('click', () => {
             displayTree(treeRoot, treeRootElement);
             document.getElementById("root").style.zoom = 2;
             
-            generateInputForm(attributeNames, data);
         }
     } else {
         let data = getData(chosenFileIndex);
@@ -73,16 +72,12 @@ makeTreeButton.addEventListener('click', () => {
         const treeRootElement = document.getElementById("root");
         displayTree(treeRoot, treeRootElement);
         
-        generateInputForm(attributeNames, data);
     }
 });
 
 function predictClassWithConfidence(node, userData, originalData) {
     const path = []; 
     let confidence = 1.0; 
-    
-    console.log("Starting prediction with userData:", userData);
-    console.log("Original data sample:", originalData.slice(0, 5));
     
     function traverse(currentNode) {
         path.push(currentNode);
@@ -141,7 +136,6 @@ function predictClassWithConfidence(node, userData, originalData) {
     }
     
     const result = traverse(node);
-    console.log("Prediction result:", result);
     return result;
 }
 
@@ -213,10 +207,6 @@ function processUserInputTraversal(userData) {
     resetTree();
     const treeRootElement = document.getElementById("root");
     displayTree(treeRoot, treeRootElement);
-    
-    console.log("User input traversal complete:", prediction, "with confidence", confidence);
-    console.log("Path:", path);
-    console.log("Alternative paths used:", path.some(node => node.wasAlternativePath));
     
     return { prediction, confidence, path };
 }
