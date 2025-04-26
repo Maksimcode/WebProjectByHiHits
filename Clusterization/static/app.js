@@ -94,7 +94,7 @@ function initializeCenters(numberClust) {
 }
 
 function Clustering(numberClust) {
-    let maxIterations = 2000; 
+    let maxIterations = 1500; 
     let convergedColors = false;
     let convergedBlack = false;
     let convergedLines = false;
