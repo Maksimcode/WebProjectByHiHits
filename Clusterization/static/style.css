@@ -63,6 +63,14 @@ input[type="number"] {
   color: #fff;
 }
 
+#clearButton{
+  height: 56px;
+  border-radius: 40px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+
 p {
   margin-left: 20px;
 }
